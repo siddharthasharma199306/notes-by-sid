@@ -1,2 +1,97 @@
 # Variables
 
+## Declaring variables (3 ways)
+
+`var`, `let` and `const` are the three ways to declare
+variables in JavaScript.
+
+## Declaration vs Initialization vs Assignment
+
+```javascript
+
+//Declaration
+let a;
+
+//Initialization
+let a = 10;
+
+//Assignment
+a = 20;
+```
+
+## let vs const
+
+`let` allows you to reassign a variable, while `const` does not allow reassignment. However, if a `const` variable is an object or an array, you can still modify the contents of the object or array, but you cannot reassign the variable itself to a new value.
+
+```javascript
+let count = 1;
+count = 2; // ✅
+```
+
+```javascript
+const count = 1;
+count = 2; // ❌
+```
+
+**Important subtlety** for objects:
+
+```javascript
+const user = { name: "A" };
+user.name = "B"; // ✅ allowed
+```
+
+## Naming rules
+
+- Variable names can contain letters, digits, underscores, and dollar signs.
+- Variable names must begin with a letter, underscore, or dollar sign.
+- Variable names are case-sensitive.
+- Variable names cannot be reserved keywords like `let`, `const`, `var`, etc
+
+```javascript
+let myName; // ✅ allowed
+let _value; // ✅ allowed
+let $price; // ✅ allowed
+let 1name; // ❌
+let let;   // ❌ keyword
+```
+
+## Undefined vs Not defined (TDZ caveat)
+
+### Undefined
+
+```javascript
+let a;
+console.log(a); // undefined
+```
+
+### Not defined
+
+```javascript
+console.log(b); // ReferenceError: b is not defined
+```
+
+## Primitive vs Reference
+
+### Case 1: Primitive
+
+*Value gets copied*
+
+```javascript
+let a = 10;
+let b = a;
+
+a = 20;
+console.log(b); // ? 10
+```
+
+### Case 2: Reference/Object
+
+*Value gets referenced*
+
+```javascript
+let a = { value: 10 };
+let b = a;
+
+a.value = 20;
+console.log(b.value); // ? 20
+```

@@ -1,2 +1,97 @@
 # Data Types
 
+## Primitive Data Types
+
+These are immutable and stored as values.
+
+
+```javascript
+let str = "hello";        // string
+let num = 42;             // number
+let big = 123n;           // bigint
+let bool = true;          // boolean
+let undef = undefined;    // undefined
+let empty = null;         // null
+let sym = Symbol("id");   // symbol
+```
+**Key characteristics:**
+
+- Immutable: Cannot be changed after creation.
+- Stored as values: Assigned and passed by value.
+
+## Non-Primitive (Reference Types)
+
+Everything else is an object:
+
+```javascript
+let obj = { name: "Siddharth" };
+let arr = [1, 2, 3];
+let fn = function () {};
+```
+
+**Key characteristics:**
+
+- Mutable: Can be changed after creation.
+- Stored as references: Assigned and passed by reference.
+- Compared by reference
+
+## `typeof` operator
+
+Used to check type:
+
+```javascript
+typeof "hello";   // "string"
+typeof 42;        // "number"
+typeof true;      // "boolean"
+typeof undefined; // "undefined"
+typeof {};        // "object"
+typeof [];        // "object"
+typeof null;      // "object" ‼️ This is a quirk/bug in JavaScript
+typeof function() {}; // "function"
+```
+
+**Important gotcha**:
+```javascript
+typeof null; // "object" ‼️ This is a quirk/bug in JavaScript
+```
+
+### Special Cases You Must Know
+
+#### Arrays
+
+```javascript
+let arr = [1, 2, 3];
+console.log(typeof arr); // "object"
+console.log(Array.isArray(arr)); // true ✅ Use this to check for arrays
+```
+
+#### Functions
+
+```javascript
+function greet() {
+  console.log("Hello");
+}
+console.log(typeof greet); // "function" ✅ Functions have their own type
+```
+
+## null vs undefined
+
+- `undefined` means a variable has been declared but not assigned a value.
+- `null` is an assignment value that represents "no value" or "empty value".
+
+```javascript
+let a;
+console.log(a); // undefined
+let b = null;
+console.log(b); // null
+```
+
+## Equality & Types (early intuition)
+
+```javascript
+1 === "1"; // false
+1 == "1";  // true
+```
+
+`==` performs type coercion, while `===` does not. 
+Always prefer `===` to avoid unexpected type coercion issues.
