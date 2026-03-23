@@ -1,2 +1,151 @@
 # Operators
 
+## Types of operators
+
+```txt
+1. Arithmetic Operators
+2. Assignment Operators
+3. Comparison Operators
+4. Logical Operators
+5. Unary Operators
+6. Ternary Operator
+```
+
+### Arithmetic Operators
+
+```js
++   // addition
+-   // subtraction
+*   // multiplication
+/   // division
+%   // modulus
+**  // exponentiation
+```
+
+#### Important: `+` is special
+
+The `+` operator can also be used for string concatenation.
+
+```js
+let a = 5;
+let b = 10;
+let sum = a + b; // 15  
+let str1 = "Hello, ";
+let str2 = "world!";
+let greeting = str1 + str2; // "Hello, world!"
+```
+
+### Assignment Operators
+
+```js
+=   // assign
++=  // add and assign
+-=  // subtract and assign
+*=  // multiply and assign
+```
+
+### Comparison Operators
+
+```js
+>   // greater than
+<   // less than
+>=
+<=
+==  // loose equality
+=== // strict equality
+!=
+!== 
+```
+
+#### Important cases
+
+```js
+null >= 0; // true
+null > 0;  // false
+null == 0; // false
+```
+
+### Logical Operators
+
+```js
+&&  // AND
+||  // OR
+!   // NOT
+```
+
+#### AND `&&`
+
+>first falsy OR last truthy value
+
+```js
+true && "hello";   // "hello"
+false && "hello";  // false
+```
+
+#### OR `||`
+
+>first truthy value
+
+```js
+0 || "fallback";   // "fallback"
+"hi" || "fallback"; // "hi"
+```
+
+#### NOT `!`
+
+```js
+!true;  // false
+!false; // true
+!0;     // true
+```
+
+#### Short-Circuiting `VERY IMPORTANT`
+
+```js
+true || console.log("won't run");
+false && console.log("won't run");
+isLoggedIn && showDashboard();
+```
+
+#### Nullish Coalescing `??`
+
+```js
+//Fallback only if null or undefined
+const value = input ?? "default";
+
+0 || 10;   // 10 ❌
+0 ?? 10;   // 0  ✅
+```
+
+### Unary Operators
+
+```js
+typeof x
++value     // convert to number
+-value     // negate
+++         // increment
+--         // decrement
+```
+
+#### Pre vs Post increment
+
+```js
+let x = 5;
+
+x++; // returns 5, then becomes 6
+++x; // becomes 6, returns 6
+```
+
+### Ternary Operator
+
+```js
+condition ? exprIfTrue : exprIfFalse
+```
+
+## Operator Precedence
+
+>`*` runs before `+`
+
+```js
+let result = 2 + 3 * 4; // 14, not 20
+```

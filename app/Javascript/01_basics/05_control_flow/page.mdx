@@ -1,2 +1,71 @@
 # Control Flow
 
+## What is Control Flow?
+
+Control flow determines **which code runs and when**.
+
+It allows programs to make decisions and execute different code paths based on conditions.
+
+---
+
+## if Statement
+
+```js
+if (condition) {
+  // runs if condition is truthy
+}
+```
+
+```js
+let age = 20;
+
+if (age >= 18) {
+  console.log("Adult");
+}
+```
+
+### Truthy and Falsy in Conditions
+
+Conditions are not limited to booleans.
+
+```js
+if ("hello") {
+  // runs (truthy)
+}
+
+if (0) {
+  // does not run (falsy)
+}
+```
+
+## if...else
+
+```js
+if (condition) {
+  // runs if true
+} else {
+  // runs if false
+}
+```
+
+```js
+let age = 16;
+
+if (age >= 18) {
+  console.log("Adult");
+} else {
+  console.log("Minor");
+}
+```
+
+## else if
+
+```js
+if (score >= 90) {
+  console.log("A");
+} else if (score >= 75) {
+  console.log("B");
+} else {
+  console.log("C");
+}
+```

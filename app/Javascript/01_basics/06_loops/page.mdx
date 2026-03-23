@@ -1,2 +1,78 @@
 # Loops
 
+## for...of
+
+>Used for iterables (arrays, strings, etc.)
+
+```js
+for (const value of iterable) {
+  // use value
+}
+```
+
+```js
+const arr = [10, 20, 30];
+
+for (const num of arr) {
+  console.log(num);
+}
+```
+
+## for...in
+
+>Used for object keys
+
+```js
+const obj = { a: 1, b: 2 };
+
+for (const key in obj) {
+  console.log(key);
+}
+```
+
+### ⚠️ Important
+
+>Iterates indexes, not values
+
+```js
+const arr = [10, 20, 30];
+for (const key in arr) {
+  console.log(key); // logs "0", "1", "2" (indexes)
+}
+```
+
+>`Rule of thumb`
+
+>Use `for...of` for arrays and strings
+
+>Use `for...in` for objects
+
+## `break` and `continue`
+
+```js
+for (let i = 0; i < 5; i++) {
+  if (i === 3) break;
+  console.log(i); // logs 0, 1, 2
+}
+```
+
+```js
+for (let i = 0; i < 5; i++) {
+  if (i === 2) continue;
+  console.log(i); // logs 0, 1, 3, 4 (skips 2)
+}
+```
+
+## Common mistakes
+
+### ❌ Off-by-one error
+
+```js
+for (let i = 0; i <= arr.length; i++) //last iteration is undefined
+```
+
+### ❌ Mutating while looping
+
+```js
+arr.splice(i, 1); // This changes the array length and shifts elements, causing unexpected behavior
+```
