@@ -1,4 +1,4 @@
-"use client"
+
 # Type Coercion and Conversion
 
 ## What is Type Conversion?
@@ -188,9 +188,9 @@ null >= 0 // true, because null is coerced to 0 Number(null), and then 0 >= 0 is
 [1,2] + [3,4] // "1,23,4"
 !!"false" == !!"true" // true, because both "false" and "true" are non-empty strings, so they are both truthy, and !!"false" is true, and !!"true" is true, so true == true is true
 ```
-import { Callout } from 'nextra/components'
+import PatternCallout from './_components/pattern-callout'
 
-<Callout type="important">
+<PatternCallout >
 
 **Pattern 1**:
 `+` -> string if any operand is string
@@ -202,5 +202,5 @@ Objects/arrays → try .toString()
 **Pattern 3**:
 Falsy list is fixed (memorize it)
 
-</Callout>
+</PatternCallout>
 
