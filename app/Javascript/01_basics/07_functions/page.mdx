@@ -1,2 +1,84 @@
 # Functions
 
+> A function is a reusable block of code that performs a task
+
+```js {4}
+function greet() {
+  console.log("Hello");
+}
+greet(); // "Hello"
+```
+
+## Function Expressions
+
+```js
+const greet = function () {
+  console.log("Hello");
+};
+```
+
+### Difference from declaration
+
+- Stored in a variable
+- Not hoisted like declarations (we'll revisit later)
+
+## Arrow Functions
+
+```js
+const greet = () => {
+  console.log("Hello");
+};
+```
+
+### ⚠️ Important difference (don't ignore)
+
+> Arrow functions do not have their own this (To be discussed in detail later)
+
+```js {1}
+//👉 Arrow functions do not have their own this
+const obj = {
+  name: "A",
+  say: () => {
+    console.log(this.name);
+  },
+};
+```
+
+## Default Parameters
+
+```js {1} /name/
+function greet(name = "World") {
+  console.log(`Hello, ${name}!`);
+}
+greet(); // "Hello, World!"
+greet("Alice"); // "Hello, Alice!"
+```
+
+## Rest Parameters
+
+```js {1} /numbers/
+function sum(...numbers) {
+  return numbers.reduce((acc, num) => acc + num, 0);
+}
+console.log(sum(1, 2, 3)); // 6
+```
+
+## Function Scope (preview)
+
+```js {3, 4} /x/
+function test() {
+  let x = 10;
+}
+console.log(x); // ❌ ReferenceError
+// 👉🏻 Variables inside functions are not accessible outside
+```
+
+### Functions are values
+
+```js {4,5}
+function sayHi() {
+  console.log("Hi");
+}
+const fn = sayHi;
+fn(); // "Hi"
+```
