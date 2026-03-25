@@ -1,4 +1,3 @@
-
 # Type Coercion and Conversion
 
 ## What is Type Conversion?
@@ -6,9 +5,9 @@
 > Explicit conversion done by the developer
 
 ```js
-Number("10");   // 10
-String(123);    // "123"
-Boolean(1);     // true
+Number("10"); // 10
+String(123); // "123"
+Boolean(1); // true
 ```
 
 ## What is Type Coercion?
@@ -25,9 +24,10 @@ Boolean(1);     // true
 If one operand is a string, `+` becomes concatenation.
 
 ```js
-"5" + 1;     // "51"
+"5" + 1; // "51"
 "hello" + 5; // "hello5"
 ```
+
 **Important contrast**
 
 ```js
@@ -39,47 +39,47 @@ If one operand is a string, `+` becomes concatenation.
 
 > `+` is overloaded (string + number → string)
 
-
 ### Boolean Coercion
 
 **All Falsy values, exhaustive list**:
 
 ```js
-false
-0
--0
-0n
-""
-null
-undefined
-NaN
+false;
+0 - 0;
+0n;
+("");
+null;
+undefined;
+NaN;
 ```
 
 ```js
-Boolean("");     // false
-Boolean("hi");   // true
-Boolean(0);      // false
-Boolean(100);    // true
+Boolean(""); // false
+Boolean("hi"); // true
+Boolean(0); // false
+Boolean(100); // true
 ```
 
 ### `==` vs `===`
 
 #### Strict equality (===)
+
 - No type coercion
 - Both value and type must be the same
 
 ```js
-1 === 1;       // true
-1 === "1";     // false
-0 === false;   // false
+1 === 1; // true
+1 === "1"; // false
+0 === false; // false
 ```
 
 #### Loose equality (==)
+
 - Performs type coercion if types differ
 
 ```js
-1 == "1";      // true
-0 == false;    // true
+1 == "1"; // true
+0 == false; // true
 ```
 
 ### The dangerous cases
@@ -98,10 +98,9 @@ null === undefined; // false
 
 #### Case 2: Objects and primitives
 
-
 ```js
 [] == ""; // true
-[] == 0;  // true
+[] == 0; // true
 [] == false; // true, first boolean coercion to 0, then [] is coerced to 0
 ```
 
@@ -112,22 +111,24 @@ null === undefined; // false
 #### Case 3
 
 ```js
-"" == 0 // true, because "" is coerced to 0
+"" == 0; // true, because "" is coerced to 0
 ```
 
 #### Case 4
 
 ```js
-"0" == false // true, because "0" is coerced to 0, and false is coerced to 0
+"0" == false; // true, because "0" is coerced to 0, and false is coerced to 0
 ```
 
 ## Common interview traps
 
 ```js
-[] + {} // "[object Object]", because [] is coerced to "", and {} is coerced to "[object Object]"
-{} + [] // 0, because {} is treated as an empty block, and +[] is coerced to 0
+[] + {}; // "[object Object]", because [] is coerced to "", and {} is coerced to "[object Object]"
+{
+}
++[]; // 0, because {} is treated as an empty block, and +[] is coerced to 0
 true + true; // 2
-({} + []) // [Object Object]
+({}) + []; // [Object Object]
 "5" + 3 - 2; // "53" - 2 → 51, because "5" + 3 is "53", and then "53" is coerced to 53 when used with `-`
 ```
 
@@ -144,12 +145,12 @@ Boolean(" "); // ? true, because any non-empty string is truthy
 ```
 
 ```js
-null + 1 // 1, because null is coerced to 0 when used with `+`
-undefined + 1 // NaN, because undefined is coerced to NaN, Number(undefined) is NaN
-"5" * "hello" // NaN, because "hello" cannot be coerced to a number. Number("hello") is NaN
-null == 0 // false, because null is only loosely equal to undefined, and not to any other value
-undefined == 0 // false, because undefined is only loosely equal to null, and not to any other value
-null == undefined // true, because null and undefined are considered equal in loose equality
+null + 1; // 1, because null is coerced to 0 when used with `+`
+undefined + 1; // NaN, because undefined is coerced to NaN, Number(undefined) is NaN
+"5" * "hello"; // NaN, because "hello" cannot be coerced to a number. Number("hello") is NaN
+null == 0; // false, because null is only loosely equal to undefined, and not to any other value
+undefined == 0; // false, because undefined is only loosely equal to null, and not to any other value
+null == undefined; // true, because null and undefined are considered equal in loose equality
 ```
 
 ```js
@@ -173,24 +174,29 @@ null == undefined // true, because null and undefined are considered equal in lo
 ```
 
 ```js
-[] == ![] // true, because ![] is false, and [] is coerced to "" which is falsy, so both sides are falsy and considered equal in loose equality
-+true + +"5" // 6, because +true is 1, and +"5" is 5, so 1 + 5 is 6
-"2" > "12" // true, because string comparison is lexicographical, and "2" comes after "1"
-"2" > 12 //false, because "2" is coerced to 2, and then 2 > 12 is false
-null > 0 // false, because null is coerced to 0 Number(null), and then 0 > 0 is false
-null >= 0 // true, because null is coerced to 0 Number(null), and then 0 >= 0 is true
+[] ==
+  ![] + // true, because ![] is false, and [] is coerced to "" which is falsy, so both sides are falsy and considered equal in loose equality
+    true +
+    +"5"; // 6, because +true is 1, and +"5" is 5, so 1 + 5 is 6
+"2" > "12"; // true, because string comparison is lexicographical, and "2" comes after "1"
+"2" > 12; //false, because "2" is coerced to 2, and then 2 > 12 is false
+null > 0; // false, because null is coerced to 0 Number(null), and then 0 > 0 is false
+null >= 0; // true, because null is coerced to 0 Number(null), and then 0 >= 0 is true
 ```
 
 ```js
-[] + 1 + 2 // "12", because [] is coerced to "", so "" + 1 is "1", and then "1" + 2 is "12"
-1 + 2 + [] // "3", because 1 + 2 is 3, and then 3 + [] is "3" (number + object with toString() results in string concatenation)
-[1] + [2] // "12", because [1] is coerced to "1", and [2] is coerced to "2", so "1" + "2" is "12"
-[1,2] + [3,4] // "1,23,4"
-!!"false" == !!"true" // true, because both "false" and "true" are non-empty strings, so they are both truthy, and !!"false" is true, and !!"true" is true, so true == true is true
+[] + 1 + 2; // "12", because [] is coerced to "", so "" + 1 is "1", and then "1" + 2 is "12"
+1 +
+  2 +
+  [][1] + // "3", because 1 + 2 is 3, and then 3 + [] is "3" (number + object with toString() results in string concatenation)
+  [2][(1, 2)] + // "12", because [1] is coerced to "1", and [2] is coerced to "2", so "1" + "2" is "12"
+  [3, 4]; // "1,23,4"
+!!"false" == !!"true"; // true, because both "false" and "true" are non-empty strings, so they are both truthy, and !!"false" is true, and !!"true" is true, so true == true is true
 ```
-import PatternCallout from './_components/pattern-callout'
 
-<PatternCallout >
+import PatternCallout from "../../../_components/pattern-callout";
+
+<PatternCallout type="important">
 
 **Pattern 1**:
 `+` -> string if any operand is string
@@ -203,4 +209,3 @@ Objects/arrays → try .toString()
 Falsy list is fixed (memorize it)
 
 </PatternCallout>
-

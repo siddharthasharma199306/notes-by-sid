@@ -1,2 +1,244 @@
 # Scope
 
+> Scope defines where a variable is accessible in your code
+
+If you don't get this right:
+
+- bugs become invisible
+- closures become confusing
+- hoisting feels random
+
+## Types of Scope
+
+JavaScript has 3 main types:
+
+- Global Scope
+- Function Scope
+- Block Scope
+
+### Global Scope
+
+> Variables declared outside any function/block.
+> 👉 Accessible everywhere
+
+```js {1,4}
+let globalVar = "I am global";
+
+function test() {
+  console.log(globalVar);
+}
+```
+
+### Function Scope
+
+> Variables declared inside a function
+> 👉 Only accessible inside the function
+
+```js {2, 6}
+function test() {
+  let x = 10;
+  console.log(x);
+}
+
+console.log(x); // ❌ ReferenceError
+```
+
+#### Important: `var` is function scoped
+
+```js {1-2,5,7} /x/
+// x is defined inside the if block but is available even outside of it
+// as it is function scoped
+function test() {
+  if (true) {
+    var x = 10;
+  }
+  console.log(x); // 10
+}
+```
+
+### Block Scope (`let` and `const`)
+
+> Blocks are created by {}
+
+```js {2, 6}
+if (true) {
+  let x = 10;
+  const y = 20;
+}
+
+console.log(x); // ❌
+```
+
+#### Loops also create block scope
+
+```js
+for (let i = 0; i < 3; i++) {
+  console.log(i);
+}
+
+console.log(i); // ❌
+```
+
+##### Contrast with var
+
+```js {3} /i/
+for (var i = 0; i < 3; i++) {}
+
+console.log(i); // 3
+```
+
+## Scope Chain
+
+import PatternCallout from "../../../_components/pattern-callout";
+
+<PatternCallout type="important">
+
+**When JS looks for a variable:**
+
+1. Current scope
+2. Outer scope
+3. Global scope
+
+👉 This is called lexical scoping
+
+</PatternCallout>
+
+```js {1,5, 10} /x/
+let x = 10;
+
+function outer() {
+  function inner() {
+    console.log(x);
+  }
+  inner();
+}
+
+outer(); // 10
+```
+
+## Shadowing
+
+> Inner scope can override outer scope.
+
+```js {1,4-5} /x/
+let x = 10;
+
+function test() {
+  let x = 20;
+  console.log(x); //20
+}
+```
+
+### ⚠️ Tricky case
+
+`TDZ`- Later notes
+
+```js {1,4,5} /x/
+let x = 10;
+
+function test() {
+  console.log(x); //👉 ❌ ReferenceError (TDZ)
+  let x = 20;
+}
+
+test();
+```
+
+### Illegal Shadowing
+
+```js {1,4} /x/
+let x = 10;
+
+{
+  var x = 20; // ❌ error Uncaught SyntaxError: Identifier 'x' has already been declared
+}
+```
+
+## Scope in Functions vs Blocks
+
+```js
+function test() {
+  if (true) {
+    let x = 10;
+  }
+  console.log(x); // ❌
+}
+```
+
+**But**
+
+```js
+function test() {
+  if (true) {
+    var x = 10;
+  }
+  console.log(x); // 10
+}
+```
+
+## Questions
+
+### Q1
+
+```js
+let x = 10;
+
+function test() {
+  console.log(x);
+}
+
+test(); // 10, Scope Chain
+```
+
+### Q2
+
+```js
+function test() {
+  if (true) {
+    var x = 5;
+  }
+  console.log(x); // 5, var is function scoped
+}
+test();
+```
+
+### Q3
+
+```js
+function test() {
+  if (true) {
+    let x = 5;
+  }
+  console.log(x); //ReferenceError, let is block scoped not available outside of if.
+}
+```
+
+### Q4
+
+```js
+let x = 1;
+
+function a() {
+  let x = 2;
+  function b() {
+    console.log(x); //2 shadowing + scope chain
+  }
+  b();
+}
+a();
+```
+
+### Q5
+
+```js
+let x = 1;
+
+function a() {
+  function b() {
+    console.log(x); //2
+  }
+  let x = 2;
+  b();
+}
+a();
+```
