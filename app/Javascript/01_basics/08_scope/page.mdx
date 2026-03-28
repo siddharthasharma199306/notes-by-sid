@@ -89,8 +89,6 @@ console.log(i); // 3
 
 ## Scope Chain
 
-import PatternCallout from "../../../_components/pattern-callout";
-
 <PatternCallout type="important">
 
 **When JS looks for a variable:**
@@ -241,4 +239,55 @@ function a() {
   b();
 }
 a();
+```
+
+### Q6
+
+```js
+var a = 1;
+
+function outer() {
+  console.log(a); //undefined
+  var a = 2;
+
+  function inner() {
+    console.log(a); //2
+  }
+
+  inner();
+}
+
+outer();
+```
+
+```js
+var a = 1;
+
+function test() {
+  console.log(a); //undefined
+
+  if (true) {
+    var a = 2;
+  }
+
+  console.log(a); //2
+}
+
+test();
+```
+
+```js
+var a = 1;
+
+function test() {
+  console.log(a); //undefined
+
+  if (false) {
+    var a = 2;
+  }
+
+  console.log(a); //undefined
+}
+
+test();
 ```

@@ -1,2 +1,86 @@
 # Call Stack
 
+> The Call Stack is a data structure (LIFO) that manages execution contexts.
+
+Think of it as:
+
+> “Where JS keeps track of what is currently running”
+
+## How it works (core idea)
+
+- When script starts → Global Execution Context is pushed
+- When a function is called → New context is pushed
+- When function finishes → Popped off the stack
+
+> 👉 Last In → First Out (LIFO)
+
+## Example
+
+```js
+function a() {
+  console.log("A");
+}
+
+function b() {
+  a();
+  console.log("B");
+}
+
+b();
+```
+
+### Execution flow
+
+#### Step 1
+
+```txt
+[ Global ]
+```
+
+#### Step 2 → b() called
+
+```txt
+[ b ]
+[ Global ]
+```
+
+#### Step 3 → a() called
+
+```txt
+[a]
+[b]
+[Global];
+```
+
+#### Step 4 → a() finishes
+
+```txt
+[ b ]
+[ Global ]
+```
+
+#### Step 5 → b() finishes
+
+```txt
+[ Global ]
+```
+
+#### Output
+
+```txt
+A
+B
+```
+
+## Stack Overflow (⚠️important)
+
+```js
+function fn() {
+  fn();
+}
+
+fn();
+```
+
+> 👉 Infinite recursion → stack keeps growing → crash
+> RangeError: Maximum call stack size exceeded

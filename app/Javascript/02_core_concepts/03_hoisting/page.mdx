@@ -1,2 +1,217 @@
 # Hoisting
 
+**Below understanding is wrong**
+
+<PatternCallout type="error">
+  🔴 Hoisting = moving code to the top
+</PatternCallout>
+
+**Definition**
+
+<PatternCallout type="important">
+  Hoisting is the result of JavaScripts memory creation phase, where variables
+  and functions are registered before execution starts.
+</PatternCallout>
+
+## Execution Context Refresher (Important)
+
+Every JS program runs in 2 phases:
+
+1. Memory Creation Phase (Hoisting happens here)
+   - Variables → stored in memory
+   - Functions → stored fully in memory
+
+2. Execution Phase
+   - Code runs line by line
+
+## Example 1: var
+
+```js copy
+console.log(a);
+var a = 10;
+```
+
+What JS does internally:
+
+**Memory phase:**
+
+```js
+a = undefined;
+```
+
+**Execution phase:**
+
+```js
+console.log(a); // undefined
+a = 10;
+```
+
+Output:
+
+```js
+undefined;
+```
+
+> var is hoisted and initialized with undefined
+
+## Example 2: `let` and `const` ⚠️ TDZ
+
+```js
+console.log(a);
+let a = 10;
+```
+
+**Memory phase:**
+
+- `a` is allocated, **but not** initialized
+
+**Execution phase**
+
+```js
+console.log(a); // ❌ ReferenceError
+```
+
+**‼ Why?**
+
+Because of `Temporal Dead Zone (TDZ)`
+
+### 🚫 Temporal Dead Zone (TDZ)
+
+> The time between variable declaration and initialization where accessing it throws an error.
+
+```js
+let a = 10;
+start of scope → until `let a = 10`
+```
+
+## Example 3: Function Declaration
+
+```js
+sayHi();
+
+function sayHi() {
+  console.log("Hi");
+}
+```
+
+**Memory phase:**
+
+```js
+sayHi = function() { ... }
+```
+
+**Execution:**
+
+```js
+sayHi(); // works
+```
+
+**Output:**
+
+```js
+Hi;
+```
+
+> Function declarations are fully hoisted
+
+## Example 4: Function Expression
+
+```js
+sayHi();
+
+var sayHi = function () {
+  console.log("Hi");
+};
+//memory phase
+sayHi = undefined;
+//execution phase
+sayHi(); // ❌ TypeError sayHi is not a function
+```
+
+> 👉 Because:
+> It's treated like a variable (var)
+> Not a function during memory phase
+
+## 🔥 Important Edge Case
+
+```js
+var a = 1;
+
+function a() {}
+
+console.log(a);
+```
+
+**Memory phase:**
+
+```js
+a = function a() {};
+```
+
+**Execution:**
+
+```js
+a = 1;
+console.log(a); // 1
+```
+
+> 👉 Function gets priority in memory phase
+> 👉 Variable assignment overrides later
+
+## 🧠 Real Understanding (What's Actually Happening)
+
+Behind the scenes:
+
+- JavaScript creates a Lexical Environment
+- Stores: `variables` and `functions`
+- That environment is used during execution
+
+Hoisting is just: “Pre-registration of identifiers in memory before execution”
+
+## Questions
+
+### Q1
+
+```js
+console.log(a); //undefined
+var a;
+```
+
+### Q2
+
+```js
+console.log(a); //ReferenceError
+let a;
+```
+
+### Q3
+
+```js
+foo(); //TypeError
+
+var foo = function () {};
+```
+
+#### Q4
+
+Works fine
+
+```js
+foo();
+
+function foo() {}
+```
+
+#### Q5
+
+```js
+console.log(a); //undefined
+var a = 5;
+
+function test() {
+  console.log(b); //ReferenceError
+  let b = 10;
+}
+
+test();
+```

@@ -1,2 +1,193 @@
 # Execution Context
 
+> Execution Context is the environment in which JavaScript code is evaluated and executed
+
+Think of it as:
+
+> “JS creates a box to run your code, with memory + rules”
+
+This is the foundation for:
+
+- `hoisting`
+- `closures`
+- `async behavior`
+
+## Types of Execution Context
+
+### Global Execution Context (GEC)
+
+> Created when JS program starts
+> Only one exists
+
+### Funtion Execution Context (FEC)
+
+> Created every time a function is invoked
+
+## What's inside an Execution Context?
+
+1. Memory (Variable Environment)
+2. Code (Execution Phase)
+
+## Two Phases of Execution (⚠️Important)
+
+### Phase 1: Memory Creation Phase
+
+JS scans your code and:
+
+- Creates variables
+- Assign initial values
+
+### Phase 2: Execution Phase
+
+JS runs code line by line.
+
+## Example (step-by-step)
+
+```js copy
+var x = 10;
+
+function test() {
+  console.log("Hello");
+}
+
+test();
+```
+
+### Step 1: Global Execution Context created
+
+#### Memory Phase
+
+```txt
+x → undefined
+test → function definition
+```
+
+#### Execution Phase
+
+```txt
+x = 10
+test() // function called
+```
+
+### Step 2: Function Execution Context
+
+When `test()` runs:
+
+```js
+function test() {
+  console.log("Hello");
+}
+```
+
+> A new execution context is created.
+
+#### Memory phase
+
+- no variables → nothing stored
+
+#### Execution phase
+
+```js
+console.log("Hello");
+```
+
+### Call Stack (preview)
+
+Execution contexts are managed using a stack:
+
+```txt
+Call Stack:
+[ test ]
+[ global ]
+```
+
+After `test` finishes:
+
+```txt
+Call Stack:
+[ global ]
+```
+
+👉 Last In → First Out (LIFO)
+
+## Important behavior (⚠️ Very Important)
+
+```js
+console.log(x);
+
+var x = 5;
+
+//Memory phase
+x->undefined
+
+//Execution phase
+console.log(undefined);
+x = 5;
+```
+
+<PatternCallout type="important">
+  👉 This is why you see undefined instead of error
+</PatternCallout>
+
+## Another example (function + variable)
+
+```js copy
+console.log(a);
+
+var a = 10;
+
+function foo() {
+  console.log("Hi");
+}
+
+//Memory phase
+a → undefined
+foo → function
+
+//Execution phase
+console.log(undefined);
+a = 10;
+```
+
+## Questions
+
+### Q1
+
+```js copy
+console.log(a);
+
+var a = 5; //undefined
+```
+
+### Q2
+
+```js copy
+foo(); //Hi
+
+function foo() {
+  console.log("Hi");
+}
+```
+
+### Q3
+
+```js
+foo(); //TypeError: foo is not a function
+
+var foo = function () {
+  console.log("Hi");
+};
+```
+
+### Q4
+
+```js
+var x = 1;
+
+function test() {
+  console.log(x);
+  var x = 2;
+}
+
+test(); //undefined
+```
