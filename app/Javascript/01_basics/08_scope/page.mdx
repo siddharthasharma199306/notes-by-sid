@@ -21,7 +21,7 @@ JavaScript has 3 main types:
 > Variables declared outside any function/block.
 > 👉 Accessible everywhere
 
-```js {1,4}
+```js copy {1,4}
 let globalVar = "I am global";
 
 function test() {
@@ -34,7 +34,7 @@ function test() {
 > Variables declared inside a function
 > 👉 Only accessible inside the function
 
-```js {2, 6}
+```js copy {2, 6}
 function test() {
   let x = 10;
   console.log(x);
@@ -45,7 +45,7 @@ console.log(x); // ❌ ReferenceError
 
 #### Important: `var` is function scoped
 
-```js {1-2,5,7} /x/
+```js copy {1-2,5,7} /x/
 // x is defined inside the if block but is available even outside of it
 // as it is function scoped
 function test() {
@@ -60,7 +60,7 @@ function test() {
 
 > Blocks are created by {}
 
-```js {2, 6}
+```js copy {2, 6}
 if (true) {
   let x = 10;
   const y = 20;
@@ -71,7 +71,7 @@ console.log(x); // ❌
 
 #### Loops also create block scope
 
-```js
+```js copy
 for (let i = 0; i < 3; i++) {
   console.log(i);
 }
@@ -81,7 +81,7 @@ console.log(i); // ❌
 
 ##### Contrast with var
 
-```js {3} /i/
+```js copy {3} /i/
 for (var i = 0; i < 3; i++) {}
 
 console.log(i); // 3
@@ -103,7 +103,7 @@ import PatternCallout from "../../../_components/pattern-callout";
 
 </PatternCallout>
 
-```js {1,5, 10} /x/
+```js copy {1,5, 10} /x/
 let x = 10;
 
 function outer() {
@@ -120,7 +120,7 @@ outer(); // 10
 
 > Inner scope can override outer scope.
 
-```js {1,4-5} /x/
+```js copy {1,4-5} /x/
 let x = 10;
 
 function test() {
@@ -133,7 +133,7 @@ function test() {
 
 `TDZ`- Later notes
 
-```js {1,4,5} /x/
+```js copy {1,4,5} /x/
 let x = 10;
 
 function test() {
@@ -146,7 +146,7 @@ test();
 
 ### Illegal Shadowing
 
-```js {1,4} /x/
+```js copy {1,4} /x/
 let x = 10;
 
 {
@@ -156,7 +156,7 @@ let x = 10;
 
 ## Scope in Functions vs Blocks
 
-```js
+```js copy
 function test() {
   if (true) {
     let x = 10;
@@ -167,7 +167,7 @@ function test() {
 
 **But**
 
-```js
+```js copy
 function test() {
   if (true) {
     var x = 10;
@@ -180,7 +180,7 @@ function test() {
 
 ### Q1
 
-```js
+```js copy
 let x = 10;
 
 function test() {
@@ -192,7 +192,7 @@ test(); // 10, Scope Chain
 
 ### Q2
 
-```js
+```js copy
 function test() {
   if (true) {
     var x = 5;
@@ -204,7 +204,7 @@ test();
 
 ### Q3
 
-```js
+```js copy
 function test() {
   if (true) {
     let x = 5;
@@ -215,7 +215,7 @@ function test() {
 
 ### Q4
 
-```js
+```js copy
 let x = 1;
 
 function a() {
@@ -230,7 +230,7 @@ a();
 
 ### Q5
 
-```js
+```js copy
 let x = 1;
 
 function a() {

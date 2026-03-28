@@ -2,7 +2,7 @@
 
 > A function is a reusable block of code that performs a task
 
-```js {4}
+```js copy {4}
 function greet() {
   console.log("Hello");
 }
@@ -11,7 +11,7 @@ greet(); // "Hello"
 
 ## Function Expressions
 
-```js
+```js copy
 const greet = function () {
   console.log("Hello");
 };
@@ -24,7 +24,7 @@ const greet = function () {
 
 ## Arrow Functions
 
-```js
+```js copy
 const greet = () => {
   console.log("Hello");
 };
@@ -34,7 +34,7 @@ const greet = () => {
 
 > Arrow functions do not have their own this (To be discussed in detail later)
 
-```js {1}
+```js copy {1}
 //👉 Arrow functions do not have their own this
 const obj = {
   name: "A",
@@ -46,7 +46,7 @@ const obj = {
 
 ## Default Parameters
 
-```js {1} /name/
+```js copy {1} /name/
 function greet(name = "World") {
   console.log(`Hello, ${name}!`);
 }
@@ -56,7 +56,7 @@ greet("Alice"); // "Hello, Alice!"
 
 ## Rest Parameters
 
-```js {1} /numbers/
+```js copy {1} /numbers/
 function sum(...numbers) {
   return numbers.reduce((acc, num) => acc + num, 0);
 }
@@ -65,7 +65,7 @@ console.log(sum(1, 2, 3)); // 6
 
 ## Function Scope (preview)
 
-```js {3, 4} /x/
+```js copy {3, 4} /x/
 function test() {
   let x = 10;
 }
@@ -75,7 +75,7 @@ console.log(x); // ❌ ReferenceError
 
 ### Functions are values
 
-```js {4,5}
+```js copy {4,5}
 function sayHi() {
   console.log("Hi");
 }

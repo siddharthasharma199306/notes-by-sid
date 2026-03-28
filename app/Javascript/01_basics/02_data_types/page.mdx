@@ -4,16 +4,16 @@
 
 These are immutable and stored as values.
 
-
-```javascript
-let str = "hello";        // string
-let num = 42;             // number
-let big = 123n;           // bigint
-let bool = true;          // boolean
-let undef = undefined;    // undefined
-let empty = null;         // null
-let sym = Symbol("id");   // symbol
+```js copy
+let str = "hello"; // string
+let num = 42; // number
+let big = 123n; // bigint
+let bool = true; // boolean
+let undef = undefined; // undefined
+let empty = null; // null
+let sym = Symbol("id"); // symbol
 ```
+
 **Key characteristics:**
 
 - Immutable: Cannot be changed after creation.
@@ -23,7 +23,7 @@ let sym = Symbol("id");   // symbol
 
 Everything else is an object:
 
-```javascript
+```js copy
 let obj = { name: "Siddharth" };
 let arr = [1, 2, 3];
 let fn = function () {};
@@ -39,19 +39,20 @@ let fn = function () {};
 
 Used to check type:
 
-```javascript
-typeof "hello";   // "string"
-typeof 42;        // "number"
-typeof true;      // "boolean"
+```js copy
+typeof "hello"; // "string"
+typeof 42; // "number"
+typeof true; // "boolean"
 typeof undefined; // "undefined"
-typeof {};        // "object"
-typeof [];        // "object"
-typeof null;      // "object" ‼️ This is a quirk/bug in JavaScript
-typeof function() {}; // "function"
+typeof {}; // "object"
+typeof []; // "object"
+typeof null; // "object" ‼️ This is a quirk/bug in JavaScript
+typeof function () {}; // "function"
 ```
 
 **Important gotcha**:
-```javascript
+
+```js copy
 typeof null; // "object" ‼️ This is a quirk/bug in JavaScript
 ```
 
@@ -59,7 +60,7 @@ typeof null; // "object" ‼️ This is a quirk/bug in JavaScript
 
 #### Arrays
 
-```javascript
+```js copy
 let arr = [1, 2, 3];
 console.log(typeof arr); // "object"
 console.log(Array.isArray(arr)); // true ✅ Use this to check for arrays
@@ -67,7 +68,7 @@ console.log(Array.isArray(arr)); // true ✅ Use this to check for arrays
 
 #### Functions
 
-```javascript
+```js copy
 function greet() {
   console.log("Hello");
 }
@@ -79,7 +80,7 @@ console.log(typeof greet); // "function" ✅ Functions have their own type
 - `undefined` means a variable has been declared but not assigned a value.
 - `null` is an assignment value that represents "no value" or "empty value".
 
-```javascript
+```js copy
 let a;
 console.log(a); // undefined
 let b = null;
@@ -88,10 +89,10 @@ console.log(b); // null
 
 ## Equality & Types (early intuition)
 
-```javascript
+```js copy
 1 === "1"; // false
-1 == "1";  // true
+1 == "1"; // true
 ```
 
-`==` performs type coercion, while `===` does not. 
+`==` performs type coercion, while `===` does not.
 Always prefer `===` to avoid unexpected type coercion issues.

@@ -2,15 +2,15 @@
 
 ## for...of
 
->Used for iterables (arrays, strings, etc.)
+> Used for iterables (arrays, strings, etc.)
 
-```js
+```js copy
 for (const value of iterable) {
   // use value
 }
 ```
 
-```js
+```js copy
 const arr = [10, 20, 30];
 
 for (const num of arr) {
@@ -20,9 +20,9 @@ for (const num of arr) {
 
 ## for...in
 
->Used for object keys
+> Used for object keys
 
-```js
+```js copy
 const obj = { a: 1, b: 2 };
 
 for (const key in obj) {
@@ -32,31 +32,31 @@ for (const key in obj) {
 
 ### ⚠️ Important
 
->Iterates indexes, not values
+> Iterates indexes, not values
 
-```js
+```js copy
 const arr = [10, 20, 30];
 for (const key in arr) {
   console.log(key); // logs "0", "1", "2" (indexes)
 }
 ```
 
->`Rule of thumb`
+> `Rule of thumb`
 
->Use `for...of` for arrays and strings
+> Use `for...of` for arrays and strings
 
->Use `for...in` for objects
+> Use `for...in` for objects
 
 ## `break` and `continue`
 
-```js
+```js copy
 for (let i = 0; i < 5; i++) {
   if (i === 3) break;
   console.log(i); // logs 0, 1, 2
 }
 ```
 
-```js
+```js copy
 for (let i = 0; i < 5; i++) {
   if (i === 2) continue;
   console.log(i); // logs 0, 1, 3, 4 (skips 2)
@@ -67,12 +67,12 @@ for (let i = 0; i < 5; i++) {
 
 ### ❌ Off-by-one error
 
-```js
+```js copy
 for (let i = 0; i <= arr.length; i++) //last iteration is undefined
 ```
 
 ### ❌ Mutating while looping
 
-```js
+```js copy
 arr.splice(i, 1); // This changes the array length and shifts elements, causing unexpected behavior
 ```

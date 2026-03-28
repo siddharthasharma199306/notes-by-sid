@@ -13,7 +13,7 @@
 
 ### Arithmetic Operators
 
-```js
+```js copy
 +   // addition
 -   // subtraction
 *   // multiplication
@@ -26,10 +26,10 @@
 
 The `+` operator can also be used for string concatenation.
 
-```js
+```js copy
 let a = 5;
 let b = 10;
-let sum = a + b; // 15  
+let sum = a + b; // 15
 let str1 = "Hello, ";
 let str2 = "world!";
 let greeting = str1 + str2; // "Hello, world!"
@@ -37,7 +37,7 @@ let greeting = str1 + str2; // "Hello, world!"
 
 ### Assignment Operators
 
-```js
+```js copy
 =   // assign
 +=  // add and assign
 -=  // subtract and assign
@@ -46,7 +46,7 @@ let greeting = str1 + str2; // "Hello, world!"
 
 ### Comparison Operators
 
-```js
+```js copy
 >   // greater than
 <   // less than
 >=
@@ -54,20 +54,20 @@ let greeting = str1 + str2; // "Hello, world!"
 ==  // loose equality
 === // strict equality
 !=
-!== 
+!==
 ```
 
 #### Important cases
 
-```js
+```js copy
 null >= 0; // true
-null > 0;  // false
+null > 0; // false
 null == 0; // false
 ```
 
 ### Logical Operators
 
-```js
+```js copy
 &&  // AND
 ||  // OR
 !   // NOT
@@ -75,33 +75,33 @@ null == 0; // false
 
 #### AND `&&`
 
->first falsy OR last truthy value
+> first falsy OR last truthy value
 
-```js
-true && "hello";   // "hello"
-false && "hello";  // false
+```js copy
+true && "hello"; // "hello"
+false && "hello"; // false
 ```
 
 #### OR `||`
 
->first truthy value
+> first truthy value
 
-```js
-0 || "fallback";   // "fallback"
+```js copy
+0 || "fallback"; // "fallback"
 "hi" || "fallback"; // "hi"
 ```
 
 #### NOT `!`
 
-```js
-!true;  // false
+```js copy
+!true; // false
 !false; // true
-!0;     // true
+!0; // true
 ```
 
 #### Short-Circuiting `VERY IMPORTANT`
 
-```js
+```js copy
 true || console.log("won't run");
 false && console.log("won't run");
 isLoggedIn && showDashboard();
@@ -109,17 +109,17 @@ isLoggedIn && showDashboard();
 
 #### Nullish Coalescing `??`
 
-```js
+```js copy
 //Fallback only if null or undefined
 const value = input ?? "default";
 
-0 || 10;   // 10 ❌
-0 ?? 10;   // 0  ✅
+0 || 10; // 10 ❌
+0 ?? 10; // 0  ✅
 ```
 
 ### Unary Operators
 
-```js
+```js copy
 typeof x
 +value     // convert to number
 -value     // negate
@@ -129,7 +129,7 @@ typeof x
 
 #### Pre vs Post increment
 
-```js
+```js copy
 let x = 5;
 
 x++; // returns 5, then becomes 6
@@ -138,14 +138,14 @@ x++; // returns 5, then becomes 6
 
 ### Ternary Operator
 
-```js
-condition ? exprIfTrue : exprIfFalse
+```js copy
+condition ? exprIfTrue : exprIfFalse;
 ```
 
 ## Operator Precedence
 
->`*` runs before `+`
+> `*` runs before `+`
 
-```js
+```js copy
 let result = 2 + 3 * 4; // 14, not 20
 ```

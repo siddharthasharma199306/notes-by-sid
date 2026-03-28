@@ -4,7 +4,7 @@
 
 > Explicit conversion done by the developer
 
-```js
+```js copy
 Number("10"); // 10
 String(123); // "123"
 Boolean(1); // true
@@ -14,7 +14,7 @@ Boolean(1); // true
 
 > Implicit conversion done by JavaScript
 
-```js
+```js copy
 "5" + 1; // "51"
 "5" - 1; // 4
 ```
@@ -23,14 +23,14 @@ Boolean(1); // true
 
 If one operand is a string, `+` becomes concatenation.
 
-```js
+```js copy
 "5" + 1; // "51"
 "hello" + 5; // "hello5"
 ```
 
 **Important contrast**
 
-```js
+```js copy
 "5" - 1; // 4
 "5" * 2; // 10
 ```
@@ -43,7 +43,7 @@ If one operand is a string, `+` becomes concatenation.
 
 **All Falsy values, exhaustive list**:
 
-```js
+```js copy
 false;
 0 - 0;
 0n;
@@ -53,7 +53,7 @@ undefined;
 NaN;
 ```
 
-```js
+```js copy
 Boolean(""); // false
 Boolean("hi"); // true
 Boolean(0); // false
@@ -67,7 +67,7 @@ Boolean(100); // true
 - No type coercion
 - Both value and type must be the same
 
-```js
+```js copy
 1 === 1; // true
 1 === "1"; // false
 0 === false; // false
@@ -77,7 +77,7 @@ Boolean(100); // true
 
 - Performs type coercion if types differ
 
-```js
+```js copy
 1 == "1"; // true
 0 == false; // true
 ```
@@ -86,19 +86,19 @@ Boolean(100); // true
 
 #### Case 1: null and undefined
 
-```js
+```js copy
 null == undefined; // true
 ```
 
 whereas
 
-```js
+```js copy
 null === undefined; // false
 ```
 
 #### Case 2: Objects and primitives
 
-```js
+```js copy
 [] == ""; // true
 [] == 0; // true
 [] == false; // true, first boolean coercion to 0, then [] is coerced to 0
@@ -110,19 +110,19 @@ null === undefined; // false
 
 #### Case 3
 
-```js
+```js copy
 "" == 0; // true, because "" is coerced to 0
 ```
 
 #### Case 4
 
-```js
+```js copy
 "0" == false; // true, because "0" is coerced to 0, and false is coerced to 0
 ```
 
 ## Common interview traps
 
-```js
+```js copy
 [] + {}; // "[object Object]", because [] is coerced to "", and {} is coerced to "[object Object]"
 {
 }
@@ -134,7 +134,7 @@ true + true; // 2
 
 ## More Examples
 
-```js
+```js copy
 "10" + 2; // "102", because "10" is a string, so + becomes concatenation
 "10" - 2; // 8, because "10" is coerced to 10, and then 10 - 2 is 8
 "10" * 2; // 20, because "10" is coerced to 10, and then 10 * 2 is 20
@@ -144,7 +144,7 @@ null == undefined; // true, because null and undefined are considered equal in l
 Boolean(" "); // ? true, because any non-empty string is truthy
 ```
 
-```js
+```js copy
 null + 1; // 1, because null is coerced to 0 when used with `+`
 undefined + 1; // NaN, because undefined is coerced to NaN, Number(undefined) is NaN
 "5" * "hello"; // NaN, because "hello" cannot be coerced to a number. Number("hello") is NaN
@@ -153,7 +153,7 @@ undefined == 0; // false, because undefined is only loosely equal to null, and n
 null == undefined; // true, because null and undefined are considered equal in loose equality
 ```
 
-```js
+```js copy
 //1. false to number, 0
 //2. [] == 0
 //3. [] -> primitive -> "" (empty string)
@@ -173,7 +173,7 @@ null == undefined; // true, because null and undefined are considered equal in l
 [] + {} // "[object Object]", because [] is coerced to "", and {}
 ```
 
-```js
+```js copy
 [] ==
   ![] + // true, because ![] is false, and [] is coerced to "" which is falsy, so both sides are falsy and considered equal in loose equality
     true +
@@ -184,7 +184,7 @@ null > 0; // false, because null is coerced to 0 Number(null), and then 0 > 0 is
 null >= 0; // true, because null is coerced to 0 Number(null), and then 0 >= 0 is true
 ```
 
-```js
+```js copy
 [] + 1 + 2; // "12", because [] is coerced to "", so "" + 1 is "1", and then "1" + 2 is "12"
 1 +
   2 +

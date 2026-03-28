@@ -7,8 +7,7 @@ variables in JavaScript.
 
 ## Declaration vs Initialization vs Assignment
 
-```javascript
-
+```js copy
 //Declaration
 let a;
 
@@ -23,19 +22,19 @@ a = 20;
 
 `let` allows you to reassign a variable, while `const` does not allow reassignment. However, if a `const` variable is an object or an array, you can still modify the contents of the object or array, but you cannot reassign the variable itself to a new value.
 
-```javascript
+```js copy
 let count = 1;
 count = 2; // ✅
 ```
 
-```javascript
+```js copy
 const count = 1;
 count = 2; // ❌
 ```
 
 **Important subtlety** for objects:
 
-```javascript
+```js copy
 const user = { name: "A" };
 user.name = "B"; // ✅ allowed
 ```
@@ -47,7 +46,7 @@ user.name = "B"; // ✅ allowed
 - Variable names are case-sensitive.
 - Variable names cannot be reserved keywords like `let`, `const`, `var`, etc
 
-```javascript
+```js copy
 let myName; // ✅ allowed
 let _value; // ✅ allowed
 let $price; // ✅ allowed
@@ -59,14 +58,14 @@ let let;   // ❌ keyword
 
 ### Undefined
 
-```javascript
+```js copy
 let a;
 console.log(a); // undefined
 ```
 
 ### Not defined
 
-```javascript
+```js copy
 console.log(b); // ReferenceError: b is not defined
 ```
 
@@ -74,9 +73,9 @@ console.log(b); // ReferenceError: b is not defined
 
 ### Case 1: Primitive
 
-*Value gets copied*
+_Value gets copied_
 
-```javascript
+```js copy
 let a = 10;
 let b = a;
 
@@ -86,9 +85,9 @@ console.log(b); // ? 10
 
 ### Case 2: Reference/Object
 
-*Value gets referenced*
+_Value gets referenced_
 
-```javascript
+```js copy
 let a = { value: 10 };
 let b = a;
 
