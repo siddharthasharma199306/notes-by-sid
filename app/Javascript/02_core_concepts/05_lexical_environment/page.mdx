@@ -1,2 +1,121 @@
 # Lexical Environment
 
+> A Lexical Environment is the internal structure that stores variables and determines how they are accessed based on where code is written.
+
+- Memory (variables + functions) + a reference to the outer environment (parent scope)
+
+```txt {1}
+Each level can look upward, never downward.
+
+Global Environment
+  a = 10
+  ↓
+Function Environment
+  b = 20
+  ↓
+Inner Environment
+  c = 30
+
+```
+
+## Example 1 (Basic Scope Lookup)
+
+```js
+const a = 10;
+
+function foo() {
+  console.log(a); //10
+}
+
+foo();
+```
+
+- `foo` doesn't have `a`
+- Looks in outer environment
+- Finds a = 10
+
+> 🔥JavaScript uses Lexical (static) scope, not dynamic scope
+> `Scope` is decided by where **code is written**, **NOT** where it's called
+
+## Example 2 (Critical)
+
+```js
+const a = 10;
+
+function foo() {
+  console.log(a); //10
+}
+
+function bar() {
+  const a = 20;
+  foo();
+}
+
+bar();
+```
+
+- `foo` is defined in global scope
+- So it looks at global `a`, not bar's `a`
+
+> Functions remember where they were defined, not where they are called
+
+## Example 3 (Closure enters)
+
+```js
+function outer() {
+  let a = 10;
+
+  function inner() {
+    console.log(a);
+  }
+
+  return inner;
+}
+
+const fn = outer();
+fn(); //10
+```
+
+- `inner` carries its lexical environment reference
+- Even after `outer` is gone
+
+> 👉 This is a closure
+
+When `inner` is created:
+
+```txt
+inner → {
+  code: function,
+  [[Environment]] → reference to outer scope
+}
+```
+
+## Example 4 (TDZ + Lexical Environment)
+
+```js
+let a = 10;
+
+function test() {
+  console.log(a);
+  let a = 20;
+}
+
+test(); //👉 ❌ ReferenceError
+```
+
+Inside test():
+
+- New `a` is created
+- It's in TDZ
+- Lexical lookup stops there
+
+> 👉 It does NOT go to outer a
+> Lexical Environment lookup stops at the first match, even if it's uninitialized
+
+## 🧠 Summary Rules (Memorize)
+
+1. Every function creates a new lexical environment
+2. Each environment has access to its parent
+3. Lookup happens upward only
+4. Scope is decided at definition time
+5. Closures = function + its lexical environment

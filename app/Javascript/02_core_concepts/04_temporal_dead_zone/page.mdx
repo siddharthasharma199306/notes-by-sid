@@ -1,2 +1,80 @@
 # Temporal Dead Zone
 
+> `TDZ` is the time between entering a scope and the actual declaration of a `let`/`const` variable, where accessing it throws a `ReferenceError`.
+
+> `let` and `const` are hoisted — but **NOT** initialized
+
+## Example 1 (Basic TDZ)
+
+```js /a / /'a'/
+console.log(a);
+let a = 10;
+
+//Memory phase
+a -> undefined
+//Execution phase
+ReferenceError: Cannot access 'a' before initialization
+```
+
+```txt
+Scope starts
+   ↓
+[ TDZ zone ]
+   ↓
+let a = 10  ← initialization happens here
+   ↓
+Safe to access
+```
+
+## Example 2 (Inside function)
+
+```js
+function test() {
+  console.log(a); //👉 ❌ ReferenceError
+  let a = 5;
+}
+
+test();
+```
+
+> 🔥 TDZ is about timing, not scope
+> Even though `a` is in scope, you can't touch it yet
+
+## Example 3 (Block scope TDZ)
+
+```js
+{
+  console.log(x); //👉 ❌ ReferenceError
+  let x = 20;
+}
+```
+
+## Example 4 (Valid access)
+
+```js
+let a = 10;
+console.log(a); // Output: 10
+```
+
+## Example 5 (const behaves same as let)
+
+```js
+{
+  console.log(y); //👉 ❌ ReferenceError
+  const y = 30;
+}
+```
+
+### Extra rule for const
+
+```js
+const a; // SyntaxError: Missing initializer in const declaration
+```
+
+## TDZ vs Hoisting
+
+| Concept                       |    `var`     | `let/const` |
+| :---------------------------- | :----------: | ----------: |
+| Hoisted                       |    ✅ Yes    |      ✅ Yes |
+| Initialized                   | ✅ undefined |       ❌ No |
+| Accessible before declaration |    ✅ Yes    | ❌ No (TDZ) |

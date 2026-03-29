@@ -1,2 +1,169 @@
 # Closures
 
+> A closure is when a function remembers and accesses variables from its lexical environment, even after that outer function has finished executing.
+
+> Function + its remembered scope = Closure
+
+### Example 1 (Basic Closure)
+
+```js
+function outer() {
+  let a = 10;
+
+  function inner() {
+    console.log(a);
+  }
+
+  return inner;
+}
+
+const fn = outer();
+fn(); //10
+```
+
+- `outer()` runs → creates `a`
+- `inner()` is returned
+- Normally `outer` should be gone… but: 👉 `inner` remembers `a`
+
+🧠 What is Actually Stored?
+
+When `inner` is created:
+
+```js
+inner = {
+  code: function,
+  [[Environment]] → reference to outer's lexical environment
+}
+```
+
+👉 That hidden [[Environment]] is the closure
+
+> Closures are not created at return time
+> They are created at function definition time
+
+### Example 2 (Independent closures)
+
+```js
+function counter() {
+  let count = 0;
+
+  return function () {
+    count++;
+    console.log(count);
+  };
+}
+
+const c1 = counter();
+c1(); // 1
+c1(); // 2
+
+const c2 = counter();
+c2(); // 1
+```
+
+- Each call to `counter()` creates a new lexical environment
+- Each returned function closes over its own `count`
+
+### Example 3 (Classic trap — loop with `var`)
+
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 0);
+}
+```
+
+output:
+
+```txt
+3
+3
+3
+```
+
+- `var` `i` is function scoped
+- All callbacks share the same `i`
+- By the time they run → `i = 3`
+
+#### ✅ Fix with closure
+
+```js
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 0);
+}
+```
+
+```txt
+0
+1
+2
+```
+
+- `let` creates a new lexical environment per iteration
+- Each callback closes over its own `i`
+
+### Example 4 (Manual closure fix)
+
+```js
+for (var i = 0; i < 3; i++) {
+  (function (i) {
+    setTimeout(() => {
+      console.log(i);
+    }, 0);
+  })(i);
+}
+```
+
+```txt
+0
+1
+2
+```
+
+### Example 5 (Data hiding)
+
+```js
+function createUser() {
+  let password = "secret";
+
+  return {
+    checkPassword(input) {
+      return input === password;
+    },
+  };
+}
+
+const user = createUser();
+
+console.log(user.checkPassword("secret")); // true
+```
+
+**Why is password safe?**
+
+- Not accessible directly
+- Only accessible via closure
+
+👉 This is encapsulation using closures
+
+## 🔥 Advanced Insight (Important)
+
+> Closures keep variables alive in memory, that is powerful but dangerous. Memory leak below:
+
+```js
+function heavy() {
+  let bigData = new Array(1000000).fill("🔥");
+
+  return function () {
+    console.log("using bigData");
+  };
+}
+```
+
+> 👉 bigData stays in memory because of closure
+
+## 🧠 Interview-Ready Explanation
+
+> “A closure is formed when a function retains access to variables from its lexical scope even after the outer function has finished execution. This happens because functions carry a reference to their lexical environment via an internal [[Environment]] property.”
