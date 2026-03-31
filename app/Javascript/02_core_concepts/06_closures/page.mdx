@@ -6,7 +6,7 @@
 
 ### Example 1 (Basic Closure)
 
-```js
+```js copy
 function outer() {
   let a = 10;
 
@@ -29,7 +29,7 @@ fn(); //10
 
 When `inner` is created:
 
-```js
+```js copy
 inner = {
   code: function,
   [[Environment]] → reference to outer's lexical environment
@@ -43,7 +43,7 @@ inner = {
 
 ### Example 2 (Independent closures)
 
-```js
+```js copy
 function counter() {
   let count = 0;
 
@@ -66,7 +66,7 @@ c2(); // 1
 
 ### Example 3 (Classic trap — loop with `var`)
 
-```js
+```js copy
 for (var i = 0; i < 3; i++) {
   setTimeout(() => {
     console.log(i);
@@ -88,7 +88,7 @@ output:
 
 #### ✅ Fix with closure
 
-```js
+```js copy
 for (let i = 0; i < 3; i++) {
   setTimeout(() => {
     console.log(i);
@@ -107,7 +107,7 @@ for (let i = 0; i < 3; i++) {
 
 ### Example 4 (Manual closure fix)
 
-```js
+```js copy
 for (var i = 0; i < 3; i++) {
   (function (i) {
     setTimeout(() => {
@@ -125,7 +125,7 @@ for (var i = 0; i < 3; i++) {
 
 ### Example 5 (Data hiding)
 
-```js
+```js copy
 function createUser() {
   let password = "secret";
 
@@ -152,7 +152,7 @@ console.log(user.checkPassword("secret")); // true
 
 > Closures keep variables alive in memory, that is powerful but dangerous. Memory leak below:
 
-```js
+```js copy
 function heavy() {
   let bigData = new Array(1000000).fill("🔥");
 

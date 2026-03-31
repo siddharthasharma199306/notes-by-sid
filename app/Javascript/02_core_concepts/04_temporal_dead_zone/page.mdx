@@ -6,7 +6,7 @@
 
 ## Example 1 (Basic TDZ)
 
-```js /a / /'a'/
+```js copy /a / /'a'/
 console.log(a);
 let a = 10;
 
@@ -28,7 +28,7 @@ Safe to access
 
 ## Example 2 (Inside function)
 
-```js
+```js copy
 function test() {
   console.log(a); //👉 ❌ ReferenceError
   let a = 5;
@@ -42,7 +42,7 @@ test();
 
 ## Example 3 (Block scope TDZ)
 
-```js
+```js copy
 {
   console.log(x); //👉 ❌ ReferenceError
   let x = 20;
@@ -51,14 +51,14 @@ test();
 
 ## Example 4 (Valid access)
 
-```js
+```js copy
 let a = 10;
 console.log(a); // Output: 10
 ```
 
 ## Example 5 (const behaves same as let)
 
-```js
+```js copy
 {
   console.log(y); //👉 ❌ ReferenceError
   const y = 30;
@@ -67,7 +67,7 @@ console.log(a); // Output: 10
 
 ### Extra rule for const
 
-```js
+```js copy
 const a; // SyntaxError: Missing initializer in const declaration
 ```
 

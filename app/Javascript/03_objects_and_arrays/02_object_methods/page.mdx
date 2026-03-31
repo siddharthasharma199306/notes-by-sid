@@ -1,2 +1,130 @@
 # Object Methods
 
+> A method is simply a function stored as a property inside an object
+
+```js copy
+const user = {
+  name: "Sid",
+  greet: function () {
+    console.log("Hello");
+  },
+};
+
+user.greet(); // Output: Hello
+```
+
+## Modern Method Syntax
+
+Instead of:
+
+```js copy
+const user = {
+  greet: function () {
+    console.log("Hello");
+  },
+};
+```
+
+you can write:
+
+```js copy
+const user = {
+  greet() {
+    console.log("Hello");
+  },
+};
+```
+
+## Methods Can Use Object Data
+
+```js copy
+const user = {
+  name: "Sid",
+  greet() {
+    console.log("Hello " + this.name);
+  },
+};
+
+user.greet(); // Output: Hello Sid
+```
+
+### First Introduction to `this`
+
+```js copy
+this.name;
+```
+
+In the above example `this===user`, so `this.name` is the same as `user.name`.
+
+### Common Trap with `this`
+
+```js copy
+const user = {
+  name: "Sid",
+  greet() {
+    console.log(this.name);
+  },
+};
+
+const fn = user.greet;
+fn(); // Output: undefined (or error in strict mode)
+```
+
+The above output happens because the dot operator is not used to call greet function.
+
+## Methods Can Modify Object State
+
+```js copy
+const counter = {
+  count: 0,
+  increment() {
+    this.count++;
+  },
+};
+
+counter.increment();
+console.log(counter.count); //1
+```
+
+## 🔥 Objects = Data + Behavior
+
+```js copy
+properties -> data
+methods    -> behavior
+```
+
+```js copy
+const car = {
+  brand: "BMW",
+  start() {
+    console.log("Starting...");
+  },
+};`
+```
+
+## Method Returning Values
+
+```js copy
+const calculator = {
+  add(a, b) {
+    return a + b;
+  },
+};
+
+console.log(calculator.add(2, 3)); // Output: 5
+```
+
+## ⚠️ Arrow Function Trap (Important)
+
+```js copy
+const user = {
+  name: "Sid",
+  greet: () => {
+    console.log(this.name);
+  },
+};
+
+user.greet(); // Output: undefined (or error in strict mode)
+```
+
+In the above example, `this` does not refer to the `user` object because arrow functions do not have their own `this`. Instead, they inherit `this` from the surrounding context, which is typically the global object (or `undefined` in strict mode). Therefore, `this.name` will not give you the expected result.

@@ -20,7 +20,7 @@ Inner Environment
 
 ## Example 1 (Basic Scope Lookup)
 
-```js
+```js copy
 const a = 10;
 
 function foo() {
@@ -39,7 +39,7 @@ foo();
 
 ## Example 2 (Critical)
 
-```js
+```js copy
 const a = 10;
 
 function foo() {
@@ -61,7 +61,7 @@ bar();
 
 ## Example 3 (Closure enters)
 
-```js
+```js copy
 function outer() {
   let a = 10;
 
@@ -92,7 +92,7 @@ inner → {
 
 ## Example 4 (TDZ + Lexical Environment)
 
-```js
+```js copy
 let a = 10;
 
 function test() {

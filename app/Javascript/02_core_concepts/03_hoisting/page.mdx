@@ -26,7 +26,7 @@ Every JS program runs in 2 phases:
 
 ## Example 1: var
 
-```js copy
+```js copy copy
 console.log(a);
 var a = 10;
 ```
@@ -35,20 +35,20 @@ What JS does internally:
 
 **Memory phase:**
 
-```js
+```js copy
 a = undefined;
 ```
 
 **Execution phase:**
 
-```js
+```js copy
 console.log(a); // undefined
 a = 10;
 ```
 
 Output:
 
-```js
+```js copy
 undefined;
 ```
 
@@ -56,7 +56,7 @@ undefined;
 
 ## Example 2: `let` and `const` ⚠️ TDZ
 
-```js
+```js copy
 console.log(a);
 let a = 10;
 ```
@@ -67,7 +67,7 @@ let a = 10;
 
 **Execution phase**
 
-```js
+```js copy
 console.log(a); // ❌ ReferenceError
 ```
 
@@ -79,14 +79,14 @@ Because of `Temporal Dead Zone (TDZ)`
 
 > The time between variable declaration and initialization where accessing it throws an error.
 
-```js
+```js copy
 let a = 10;
 start of scope → until `let a = 10`
 ```
 
 ## Example 3: Function Declaration
 
-```js
+```js copy
 sayHi();
 
 function sayHi() {
@@ -96,19 +96,19 @@ function sayHi() {
 
 **Memory phase:**
 
-```js
+```js copy
 sayHi = function() { ... }
 ```
 
 **Execution:**
 
-```js
+```js copy
 sayHi(); // works
 ```
 
 **Output:**
 
-```js
+```js copy
 Hi;
 ```
 
@@ -116,7 +116,7 @@ Hi;
 
 ## Example 4: Function Expression
 
-```js
+```js copy
 sayHi();
 
 var sayHi = function () {
@@ -134,7 +134,7 @@ sayHi(); // ❌ TypeError sayHi is not a function
 
 ## 🔥 Important Edge Case
 
-```js
+```js copy
 var a = 1;
 
 function a() {}
@@ -144,13 +144,13 @@ console.log(a);
 
 **Memory phase:**
 
-```js
+```js copy
 a = function a() {};
 ```
 
 **Execution:**
 
-```js
+```js copy
 a = 1;
 console.log(a); // 1
 ```
@@ -172,21 +172,21 @@ Hoisting is just: “Pre-registration of identifiers in memory before execution�
 
 ### Q1
 
-```js
+```js copy
 console.log(a); //undefined
 var a;
 ```
 
 ### Q2
 
-```js
+```js copy
 console.log(a); //ReferenceError
 let a;
 ```
 
 ### Q3
 
-```js
+```js copy
 foo(); //TypeError
 
 var foo = function () {};
@@ -196,7 +196,7 @@ var foo = function () {};
 
 Works fine
 
-```js
+```js copy
 foo();
 
 function foo() {}
@@ -204,7 +204,7 @@ function foo() {}
 
 #### Q5
 
-```js
+```js copy
 console.log(a); //undefined
 var a = 5;
 

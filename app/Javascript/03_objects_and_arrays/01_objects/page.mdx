@@ -1,2 +1,188 @@
 # Objects
 
+> An object is a collection of key-value pairs
+
+```js copy
+const user = {
+  name: "Siddhartha",
+  age: 25,
+};
+```
+
+> 🔥 👉 Object keys are always strings (or Symbols)
+
+```js copy
+const obj = {
+  1: "one",
+  true: "yes",
+};
+
+console.log(obj);
+```
+
+internally becomes:
+
+```js copy
+{
+  "1": "one",
+  "true": "yes"
+}
+```
+
+## 🔑 Property Access
+
+### Dot notation
+
+```js copy
+user.name;
+```
+
+### Bracket notation
+
+```js copy
+user["name"];
+```
+
+#### ⚠️ When bracket is required
+
+```js copy
+const key = "name";
+user[key]; // ✅
+```
+
+#### 🔥 Dynamic Keys (Important)
+
+```js copy
+const key = "age";
+
+const user = {
+  [key]: 25,
+};
+//{age: 25}
+```
+
+#### ⚠️ Interview Trap
+
+> Last key wins
+
+```js copy
+const obj = {
+  a: 1,
+  b: 2,
+  a: 3,
+};
+
+console.log(obj);
+//{ a: 3, b: 2 }
+```
+
+## 🧠 Objects are Reference Types
+
+```js copy
+const a = { x: 1 };
+const b = a;
+
+b.x = 10;
+
+console.log(a.x); //10
+```
+
+> `a` and `b` point to the same memory location
+
+## ⚔️ Comparison Trap
+
+```js copy
+const a = { x: 1 };
+const b = { x: 1 };
+
+console.log(a === b); //false
+```
+
+## 🔥 Mutation vs Reassignment
+
+### Mutation
+
+👉 ✅ Allowed
+
+```js copy
+const obj = { a: 1 };
+obj.a = 2;
+```
+
+### Reassignment
+
+👉 ❌ Error
+
+```js copy
+const obj = { a: 1 };
+obj = { a: 2 };
+```
+
+> `const` protects the reference, not the content
+
+## Nested Objects Trap
+
+```js copy
+const a = { nested: { x: 1 } };
+const b = a;
+
+b.nested.x = 99;
+
+console.log(a.nested.x); //99
+```
+
+## Shallow Copy Trap (VERY IMPORTANT)
+
+```js copy
+const a = { nested: { x: 1 } };
+
+const b = { ...a };
+
+b.nested.x = 99;
+
+console.log(a.nested.x); //99
+```
+
+> Spread creates a shallow copy
+
+## Object Keys Order (Advanced)
+
+```js copy
+const obj = {
+  2: "b",
+  1: "a",
+  a: "x",
+};
+
+console.log(Object.keys(obj));
+```
+
+> Numeric keys → sorted
+> String keys → insertion order
+
+## Deleting Properties
+
+```js copy
+const obj = { a: 1 };
+delete obj.a;
+
+console.log(obj); //{}
+```
+
+## Undefined vs Missing
+
+```js copy
+const obj = { a: undefined };
+
+console.log("a" in obj); // true
+console.log(obj.a); // undefined
+```
+
+whereas, the below also gives undefined
+
+```js copy
+const obj = {};
+
+console.log("a" in obj); // false
+console.log(obj.a); // undefined
+```
