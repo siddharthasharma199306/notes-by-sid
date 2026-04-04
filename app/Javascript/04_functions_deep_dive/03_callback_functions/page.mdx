@@ -1,2 +1,94 @@
 # Callback Functions
 
+> A callback function is simply a function that is passed as an argument to another function and is executed later (or inside that function).
+
+> A callback is a function passed into another function to be invoked later, either immediately, after some operation, or when an event occurs.
+
+## Basic synchronous callback
+
+```js
+function processUser(callback) {
+  callback("Sid");
+}
+
+function greet(name) {
+  console.log(`Hello ${name}`);
+}
+
+processUser(greet); //Hello Sid
+```
+
+- `greet` → callback
+- `processUser` → HOF
+
+## 🔥 Callback with anonymous function
+
+```js
+processUser(function (name) {
+  console.log(`Hello ${name}`);
+});
+```
+
+## ✅ Arrow function version
+
+```js
+processUser((name) => {
+  console.log(`Hello ${name}`);
+});
+```
+
+🎯 Built-in callback examples
+
+- `setTimeout`
+- `setInterval`
+- `addEventListener`
+- `map`
+- `filter`
+- `reduce`
+
+## 🚀 Asynchronous callbacks (VERY important)
+
+> The arrow function is callback.
+> It is executed later by the event loop.
+> This is one of the most important JS concepts.
+
+```js
+setTimeout(() => {
+  console.log("Runs after 1 second");
+}, 1000);
+```
+
+## 🧠 Why “callback”?
+
+> Because control goes to another function first. Then that function “calls back” your function later.
+
+## 🎯 Event-based callbacks
+
+```js
+button.addEventListener("click", () => {
+  console.log("Clicked");
+});
+```
+
+## 🚨 Callback Hell (important interview topic)
+
+> This often comes up when discussing async JS evolution.
+
+```js
+getUser(function (user) {
+  getPosts(user.id, function (posts) {
+    getComments(posts[0].id, function (comments) {
+      console.log(comments);
+    });
+  });
+});
+```
+
+This nested pyramid is called **callback hell**.
+
+**it causes:**
+
+- deep nesting
+- poor readability
+- hard debugging
+- difficult error handling

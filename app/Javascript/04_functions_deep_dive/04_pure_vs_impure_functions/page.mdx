@@ -1,2 +1,138 @@
 # Pure vs Impure Functions
 
+## Pure Function
+
+A function is pure if it follows both rules:
+
+- `same input` → `same output`
+- No side effects
+
+```js
+function add(a, b) {
+  return a + b;
+}
+
+console.log(add(2, 3)); // 5
+```
+
+- input 2, 3 always gives 5
+- nothing outside the function is changed
+
+> Pure functions are deterministic.
+
+## Impure Function
+
+> A function is impure if it breaks either rule.
+
+- changes external state
+- depends on external mutable state
+- produces different output for same input
+- causes side effects
+
+```js
+let tax = 0.18;
+
+function getPrice(amount) {
+  return amount + amount * tax;
+}
+```
+
+> Because output depends on external variable tax.
+> If `tax` changes, same input gives different result.
+
+```js
+let count = 0;
+
+function increment() {
+  count++;
+}
+```
+
+> Because it modifies external state.
+> That modification is a side effect.
+
+## What is a side effect?
+
+> A side effect means the function does something beyond returning a value.
+
+Examples:
+
+- modifying external variables
+- API calls
+- DOM updates
+- logging
+- writing files
+- mutating objects/arrays
+- timers
+
+### ⚠️ Important interview point
+
+```js
+function logMessage(msg) {
+  console.log(msg);
+}
+```
+
+> Because `console.log` is a side effect.
+> It interacts with external system (console).
+
+### 🚨 Very common trap
+
+```js
+function addToCart(cart, item) {
+  cart.push(item);
+  return cart;
+}
+```
+
+> This is `impure` because it mutates the `cart` array passed in.
+> This is a side effect
+
+#### ✅ Pure version
+
+```js
+function addToCart(cart, item) {
+  return [...cart, item];
+}
+```
+
+> Now it returns a new array.
+> No mutation.
+> This is pure.
+
+## 🧠 Why pure functions are better
+
+**Pure functions are:**
+
+- easier to test
+- easier to debug
+- easier to reuse
+- predictable
+- safer in async flows
+- easier to memoize
+
+## 🚨 Tricky interview question
+
+### Is Math.random() pure?
+
+**Ans:** No
+
+> Same input (none) gives different output each time.
+
+### Is Date.now() pure?
+
+**Ans:** No
+
+> Same input (none) gives different output each time.
+
+## 🎯 Common interview examples
+
+**Impure**
+
+```js
+let total = 0;
+
+function add(value) {
+  total += value;
+}
+```

@@ -1,2 +1,123 @@
 # Higher Order Functions
 
+> A Higher Order Function is a function that does at least one of the following:
+>
+> - Takes one or more functions as arguments
+> - Returns a function as its result
+
+> A higher-order function is a function that either accepts a function as an argument or returns a function.
+
+```js
+function greet(name) {
+  return `Hello ${name}`;
+}
+
+function processUser(fn, userName) {
+  return fn(userName);
+}
+
+console.log(processUser(greet, "Sid"));
+// Hello Sid
+```
+
+- `processUser` -> HOF
+- `greet` -> callback function
+
+## HOF that returns a function
+
+```js
+function multiply(x) {
+  return function (y) {
+    return x * y;
+  };
+}
+
+const double = multiply(2);
+
+console.log(double(5)); // 10
+```
+
+Here `multiply` is also an HOF because it returns a function.
+
+This leads directly into:
+
+- closures
+- currying
+
+## Give examples of higher-order functions in JavaScript
+
+- `map`
+- `filter`
+- `reduce`
+- `forEach`
+- `sort`
+- `setTimeout`
+- `setInterval`
+- `addEventListener`
+
+```js
+const nums = [1, 2, 3];
+
+const doubled = nums.map((num) => num * 2);
+
+console.log(doubled); // [2, 4, 6]
+```
+
+## 🔥 Real world use case
+
+> Let's say you want reusable logging.
+
+```js
+function withLogging(fn) {
+  return function (...args) {
+    console.log("Function called");
+    return fn(...args);
+  };
+}
+
+function sum(a, b) {
+  return a + b;
+}
+
+const loggedSum = withLogging(sum);
+
+console.log(loggedSum(2, 3));
+```
+
+```js
+Function called
+5
+```
+
+## 🧠 Why HOFs matter in React
+
+> React is full of HOF patterns.
+
+```js
+const enhancedHandler = debounce(handleClick, 300);
+```
+
+Here `debounce` is an HOF.
+
+- memo
+- useCallback
+- useMemo
+- HOCs (Higher Order Components)
+
+## Implement your own HOF
+
+```js
+function repeat(fn, times) {
+  for (let i = 0; i < times; i++) {
+    fn();
+  }
+}
+
+repeat(() => console.log("JS"), 3);
+```
+
+```js
+JS;
+JS;
+JS;
+```

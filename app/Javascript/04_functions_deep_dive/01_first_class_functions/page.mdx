@@ -1,2 +1,142 @@
 # First Class Functions
 
+> A language is said to support first-class functions if functions are treated like any other value.
+
+In JavaScript, **functions are first-class citizens**, which means they can be:
+
+- Assigned to variables
+- Passed as arguments to other functions
+- Returned from other functions
+- stored in arrays / objects
+- created at runtime
+
+## Functions can be assigned to variables
+
+```js
+const greet = function () {
+  return "Hello";
+};
+
+console.log(greet()); // Hello
+```
+
+### Interview angle
+
+> “What is the difference between function declaration and function expression?”
+
+**Declaration**
+
+```js
+function sayHi() {}
+```
+
+**Expression**
+
+```js
+const sayHi = function () {};
+```
+
+## Functions can be passed as arguments
+
+```js
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+function processUserInput(callback) {
+  const name = prompt("Please enter your name.");
+  console.log(callback(name));
+}
+processUserInput(greet);
+```
+
+## Functions can be returned from other functions
+
+```js
+function multiplier(factor) {
+  return function (number) {
+    return number * factor;
+  };
+}
+const double = multiplier(2);
+console.log(double(5)); // 10
+```
+
+This is the base for:
+
+- Closures
+- Higher-order functions
+- Currying
+
+## Functions inside objects
+
+```js
+const person = {
+  name: "Alice",
+  greet() {
+    return `Hello, my name is ${this.name}`;
+  },
+};
+console.log(person.greet()); // Hello, my name is Alice
+```
+
+## Functions inside arrays
+
+```js
+const operations = [
+  function (x) {
+    return x + 1;
+  },
+  function (x) {
+    return x * 2;
+  },
+];
+console.log(operations[0](5)); // 6
+console.log(operations[1](5)); // 10
+```
+
+## 🎯 Common interview question
+
+### Q. Are functions objects in JavaScript?
+
+**Ans:** Yes
+
+> Functions are special callable objects.
+
+This means they can have properties too.
+
+```js
+function test() {}
+
+test.custom = "JS";
+
+console.log(test.custom); // JS
+```
+
+### Q. If functions are first class, are they primitive?
+
+**Ans:** No
+
+> Functions are objects (reference types).
+> They are first-class because the language allows them to behave like values. Those are different ideas.
+
+This means they can have properties too.
+
+```js
+function test() {}
+
+test.custom = "JS";
+
+console.log(test.custom); // JS
+```
+
+### What will this output?
+
+```js
+function sayHello() {
+  return "Hello";
+}
+
+const fn = sayHello;
+
+console.log(fn()); // Hello
+```
