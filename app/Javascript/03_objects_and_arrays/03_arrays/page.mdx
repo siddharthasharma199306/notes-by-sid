@@ -1,2 +1,145 @@
 # Arrays
 
+> In JavaScript, arrays are specialized objects
+
+```js
+const arr = [10, 20, 30];
+
+console.log(typeof arr); //Object
+console.log(Array.isArray(arr)); //true
+```
+
+> Because internally arrays are objects with:
+>
+> - numeric keys
+> - a special `length` property
+> - built-in methods
+
+## Internal Mental Model
+
+```js
+const arr = [10, 20, 30];
+
+// Internally
+
+{
+  0: 10,
+  1: 20,
+  2: 30,
+  length: 3
+}
+```
+
+## Sparse Arrays (Interview Favorite)
+
+```js
+const arr = [];
+arr[5] = 100;
+
+console.log(arr); //[empty × 5, 100]
+console.log(arr.length); //6
+
+// [empty × 5, 100]
+```
+
+## Huge Interview Trap
+
+```js
+const arr = [1, 2];
+arr[10] = 5;
+
+console.log(arr.length); //11
+```
+
+## Common Methods
+
+### push()
+
+> Adds to end
+
+```js
+const arr = [1, 2];
+arr.push(3);
+
+console.log(arr); //[1, 2, 3]
+```
+
+### pop()
+
+```js
+arr.pop();
+```
+
+### shift()
+
+> Removes from the beginning and returns the removed element
+
+```js
+arr.shift();
+```
+
+### unshift()
+
+> Adds to start and returns the new length of the array
+
+```js
+arr.unshift(0);
+```
+
+## Mutating vs Non-Mutating
+
+### Mutating Methods
+
+> These change original array
+
+- `push`
+- `pop`
+- `shift`
+- `unshift`
+- `splice`
+- `sort`
+- `reverse`
+
+### Non-mutating methods
+
+> These return a new array and do not change the original
+
+- `concat`
+- `slice`
+- `map`
+- `filter`
+- `reduce`
+
+## 🔥 Arrays are Reference Types
+
+```js
+const a = [1, 2];
+const b = a;
+
+b.push(3);
+
+console.log(a); //[1, 2, 3]
+```
+
+## ⚠️ Equality Trap
+
+> Reference comparison, not value comparison
+> Exactly like objects.
+
+```js
+console.log([1, 2] === [1, 2]); //false
+```
+
+## Arrays Can Hold Anything
+
+```js
+const arr = [1, "hello", true, { x: 1 }, [5, 6]];
+```
+
+## 🔥 Array Iteration (Foundation)
+
+```js
+const arr = [1, 2, 3];
+
+arr.forEach((num) => console.log(num));
+```

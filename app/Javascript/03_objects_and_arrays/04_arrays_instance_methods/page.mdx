@@ -1,0 +1,513 @@
+# Array instance methods
+
+## Category 1: Add / Remove
+
+### `push()`
+
+> Adds one or more elements to the end of the array.
+
+**Mutating method**: This method changes the original array.
+
+**Returns**: The new length of the array after the elements have been added.
+
+**Syntax**
+
+```js
+arr.push(element1, element2, ...)
+```
+
+#### 🔥 Common Gotchas
+
+> Returns length, not the array
+
+```js
+const arr = [1, 2];
+const result = arr.push(3);
+console.log(result); // 3
+console.log(arr); // [1, 2, 3]
+```
+
+### `pop()`
+
+> Removes the last element from an array and returns that element.
+
+**Mutating method**: This method changes the original array.
+
+**Returns**: The removed element from the array. if array is empty, it returns `undefined`.
+
+**Syntax**
+
+```js
+arr.pop();
+```
+
+#### 🔥 Common Gotchas
+
+> Returns the removed element, not the array
+
+```js
+const arr = [1, 2];
+const result = arr.pop();
+console.log(result); // 2
+console.log(arr); // [1]
+```
+
+### `shift()`
+
+> Removes the first element from an array and returns that element.
+
+**Mutating method**: This method changes the original array.
+
+**Returns**: The removed element from the array. if array is empty, it returns `undefined`.
+
+**Syntax**
+
+```js
+arr.shift();
+```
+
+#### 🔥 Common Gotchas
+
+> Slower than pop()
+> Re-indexes all remaining elements
+> For large arrays, this can be expensive
+
+```js
+const arr = [10, 20, 30];
+const removed = arr.shift();
+
+console.log(arr); // [20, 30]
+console.log(removed); // 10
+```
+
+### `unshift()`
+
+> Adds one or more elements to the beginning of the array.
+
+**Mutating method**: This method changes the original array.
+
+**Returns**: The new length of the array after the elements have been added.
+
+**Syntax**
+
+```js
+arr.unshift(element1, element2, ...)
+```
+
+#### 🔥 Common Gotchas
+
+> Same as push()
+> returns length not array
+
+```js
+const arr = [2, 3];
+const result = arr.unshift(0, 1);
+
+console.log(arr); // [0, 1, 2, 3]
+console.log(result); // 4
+```
+
+### `splice()`
+
+> Adds, removes, or replaces elements at any position
+> This is one of the most important array methods.
+
+**Mutating method**: This method changes the original array.
+
+**Returns**: Returns an array of removed elements. If no elements are removed, it returns an empty array.
+
+**Syntax**
+
+```js
+arr.splice(start, deleteCount, ...items);
+```
+
+#### 🔥 Common Gotchas
+
+> Return type is array
+
+```js
+const removed = arr.splice(1, 1);
+```
+
+> deleteCount = 0 means no elements will be removed, but items can still be added.
+
+```js
+arr.splice(1, 0, "a", "b");
+```
+
+> Negative start index
+
+```js
+arr.splice(-2, 1); // removes the second to last element
+```
+
+#### Remove example
+
+```js
+const arr = [1, 2, 3, 4];
+const removed = arr.splice(1, 2);
+
+console.log(arr); // [1, 4]
+console.log(removed); // [2, 3]
+```
+
+#### Insert example
+
+```js
+const arr = [1, 4];
+arr.splice(1, 0, 2, 3);
+
+console.log(arr); // [1, 2, 3, 4]
+```
+
+#### Replace example
+
+```js
+const arr = [1, 2, 3];
+arr.splice(1, 1, 99);
+
+console.log(arr); // [1, 99, 3]
+```
+
+## Category 2 — Copy / Extract Methods
+
+> These methods generally do not mutate the original array.
+
+### `slice()`
+
+> Returns a shallow copy of a portion of an array into a new array object.
+> **Non-mutating method**: This method does not change the original array.
+
+**Returns**: A new array containing the extracted elements.
+**Syntax**
+
+```js
+arr.slice(start, end);
+```
+
+#### 🔥 Common Gotchas
+
+> End index is excluded
+
+```js
+[1, 2, 3, 4].slice(1, 3);
+// returns [2, 3], not [2, 3, 4]
+```
+
+> No args = full shallow copy
+
+```js
+const copy = arr.slice();
+```
+
+> Negative indices
+
+```js
+[1, 2, 3, 4].slice(-2);
+// returns [3, 4]
+```
+
+> Shallow copy only
+
+```js
+const arr = [{ name: "Alice" }, { name: "Bob" }];
+const copy = arr.slice();
+copy[0].name = "Charlie";
+console.log(arr[0].name); // "Charlie"
+```
+
+### `concat()`
+
+> Merges arrays and/or values into a new array
+
+**Non-mutating method**: This method does not change the original array.
+**Returns**: A new array that is the result of merging the given arrays and/or values.
+**Syntax**
+
+```js
+arr.concat(value1, value2, ...);
+```
+
+#### 🔥 Common Gotchas
+
+> Does not modify original array
+
+```js
+const arr1 = [1, 2];
+const arr2 = [3, 4];
+const result = arr1.concat(arr2);
+console.log(arr1); // [1, 2]
+console.log(result); // [1, 2, 3, 4]
+```
+
+> Arrays are flattened only one level as arguments
+
+```js
+const arr = [1, 2];
+const result = arr.concat([3, 4], [[5, 6]]);
+console.log(result); // [1, 2, 3, 4, [5, 6]]
+```
+
+### `flat()`
+
+> Flattens nested arrays into a single array.
+
+**Non-mutating method**: This method does not change the original array.
+
+**Returns**: A new array with all sub-array elements concatenated into it recursively up to the specified depth.
+
+**Syntax**
+
+```js
+//default depth is 1
+arr.flat(depth);
+```
+
+#### 🔥 Common Gotchas
+
+> Default depth is 1
+
+```js
+const arr = [1, [2, [3, 4]]];
+console.log(arr.flat()); // [1, 2, [3, 4]]
+console.log(arr.flat(2)); // [1, 2, 3, 4]
+```
+
+> Use Infinity for full flatten
+
+```js
+const arr = [1, [2, [3, 4]]];
+console.log(arr.flat(Infinity)); // [1, 2, 3, 4]
+```
+
+> 🧠 Removes empty slots in sparse arrays, undefined, null etc are not removed. Just empty items
+
+```js
+const arr = [1, , 3];
+console.log(arr.flat()); // [1, 3]
+```
+
+### `flatMap()`
+
+> Maps each element using a mapping function, then flattens the result into a new array.
+
+**Non-mutating method**: This method does not change the original array.
+
+**Returns**: A new array that is the result of applying a mapping function to each element and then flattening the result by one level.
+**Syntax**
+
+```js
+arr.flatMap(callback);
+```
+
+#### 🔥 Common Gotchas
+
+> Only flattens one level
+
+```js
+[1].flatMap((x) => [[x]]);
+//return [[1]], not [1]
+```
+
+> Callback must return array for useful flattening
+
+```js
+[1, 2].flatMap((x) => x * 2);
+// returns [2, 4], Still valid, but flattening adds no benefit.
+```
+
+## Category 3 — Iteration / Transformation Methods
+
+> These methods help you loop, transform, and aggregate array data.
+
+### `forEach()`
+
+> Executes a callback for each element in the array.
+
+**Non-mutating method**: This method does not change the original array, but the callback can mutate elements if it modifies them.
+
+**Returns**: `undefined`. This method is used for side effects, not for producing a new array.
+
+**Syntax**
+
+```js
+arr.forEach((element, index, array) => {
+  // callback logic here
+});
+```
+
+#### 🔥 Common Gotchas
+
+> Does not return a new array
+
+```js
+const arr = [1, 2, 3];
+const result = arr.forEach((x) => x * 2);
+console.log(result); // undefined
+```
+
+> Cannot break / return early
+
+```js
+arr.forEach((x) => {
+  if (x === 2) {
+    return; // only exits the callback, not the loop
+  }
+  console.log(x);
+});
+// Output:
+// 1
+// 3
+```
+
+> Don't use for transformation, use `map` instead
+
+```js
+const arr = [1, 2, 3];
+const result = arr.forEach((x) => x * 2);
+console.log(result); // undefined
+```
+
+### `map()`
+
+> Creates a new array populated with the results of calling a provided function on every element in the calling array.
+
+**Non-mutating method**: This method does not change the original array.
+
+**Returns**: A new array with each element being the result of the callback function.
+
+**Syntax**
+
+```js
+arr.map((element, index, array) => {
+  // callback logic here
+});
+```
+
+#### 🔥 Common Gotchas
+
+> Returns a new array, does not modify original
+
+```js
+const arr = [1, 2, 3];
+const result = arr.map((x) => x * 2);
+console.log(arr); // [1, 2, 3]
+console.log(result); // [2, 4, 6]
+```
+
+> Callback must return a value for each element
+
+```js
+const arr = [1, 2, 3];
+const result = arr.map((x) => {
+  if (x === 2) {
+    return; // returns undefined for this element
+  }
+  return x * 2;
+});
+console.log(result); // [2, undefined, 6]
+```
+
+### `filter()`
+
+> Creates a new array containing only elements that pass a condition.
+
+**Non-mutating method**: This method does not change the original array.
+
+**Returns**: A new array with only the elements that satisfy the condition specified in the callback function.
+**Syntax**
+
+```js
+arr.filter((element, index, array) => {
+  // return true to keep element, false to exclude
+});
+```
+
+#### 🔥 Common Gotchas
+
+> Returns a new array, does not modify original
+
+```js
+const arr = [1, 2, 3, 4];
+const result = arr.filter((x) => x % 2 === 0);
+console.log(arr); // [1, 2, 3, 4]
+console.log(result); // [2, 4]
+```
+
+> Callback must return a boolean
+
+```js
+const arr = [1, 2, 3, 4];
+const result = arr.filter((x) => {
+  if (x % 2 === 0) {
+    return "even"; // truthy, so element is included
+  }
+  return "odd"; // also truthy, so element is included
+});
+
+console.log(result); // [1, 2, 3, 4]
+```
+
+### `reduce()`
+
+> Reduces an array into a single value
+
+**Non-mutating method**: This method does not change the original array.
+
+**Returns**: The single value that results from the reduction process.
+
+**Syntax**
+
+```js
+arr.reduce((accumulator, currentValue, index, array) => {
+  // reduction logic here
+}, initialValue);
+```
+
+#### 🔥 Common Gotchas
+
+> Returns a single value, not an array
+
+```js
+const arr = [1, 2, 3];
+const sum = arr.reduce((acc, x) => acc + x, 0);
+console.log(sum); // 6
+```
+
+> Initial value is important
+
+```js
+const arr = [1, 2, 3];
+const sumWithoutInitial = arr.reduce((acc, x) => acc + x);
+console.log(sumWithoutInitial); // 6, but if arr was empty, this would throw an error
+```
+
+> Accumulator can be anything
+
+```js
+const arr = [1, 2, 3];
+const product = arr.reduce((acc, x) => acc * x, 1);
+console.log(product); // 6
+```
+
+### `reduceRight()`
+
+> Same as reduce(), but processes from right to left
+
+## Category 4 — Searching Methods
+
+# Category 4 — Search / Check Methods
+
+| Method            | Mutates Array? | Return Type            | Description                                                   | Common Gotchas                                           |
+| ----------------- | -------------- | ---------------------- | ------------------------------------------------------------- | -------------------------------------------------------- |
+| `find()`          | ❌ No          | `element \| undefined` | Returns the **first element** that matches the condition      | Returns element, **not index**                           |
+| `findIndex()`     | ❌ No          | `number`               | Returns the **index of the first matching element**           | Returns `-1` if not found                                |
+| `findLast()`      | ❌ No          | `element \| undefined` | Returns the **last matching element** (searches right → left) | Returns element, not index                               |
+| `findLastIndex()` | ❌ No          | `number`               | Returns the **index of the last matching element**            | Returns `-1` if not found                                |
+| `includes()`      | ❌ No          | `boolean`              | Checks whether a value exists in the array                    | Handles `NaN` correctly (`[NaN].includes(NaN) === true`) |
+| `indexOf()`       | ❌ No          | `number`               | Returns index of first matching value                         | Returns `-1` if not found, fails for `NaN`               |
+| `lastIndexOf()`   | ❌ No          | `number`               | Returns index of last matching value                          | Searches from right → left                               |
+| `some()`          | ❌ No          | `boolean`              | Returns `true` if **at least one** element matches            | Stops at first `true`                                    |
+| `every()`         | ❌ No          | `boolean`              | Returns `true` if **all** elements match                      | Stops at first `false`                                   |
+| `at()`            | ❌ No          | `element \| undefined` | Returns element at index                                      | Supports negative indices (`-1` = last element)          |
