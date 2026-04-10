@@ -201,6 +201,26 @@ const topics = [
       "real-world-applications",
     ],
   },
+  {
+    name: "ai-for-web-developers",
+    children: [
+      "llm-fundamentals-and-model-selection",
+      "prompt-engineering-and-context-design",
+      "ai-assisted-dev-workflow",
+      "llm-api-integration-patterns",
+      "rag-and-retrieval-basics",
+      "mcp-model-context-protocol",
+      "langchain-fundamentals",
+      "langgraph-agent-workflows",
+      "tool-calling-and-function-execution",
+      "memory-and-conversation-state",
+      "evaluation-and-guardrails",
+      "security-and-prompt-injection",
+      "observability-and-cost-control",
+      "production-ai-architecture",
+      "real-world-enterprise-use-cases",
+    ],
+  },
 ];
 
 const pad = (num) => String(num).padStart(2, "0");
