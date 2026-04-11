@@ -22,3 +22,146 @@ _Because function is used as a value inside an expression._
 ```js
 const fn = function () {};
 ```
+
+## Another valid syntax
+
+```js
+(function () {
+  console.log("Hello");
+})();
+```
+
+## Arrow function IIFE
+
+```js
+(() => {
+  console.log("Arrow IIFE");
+})();
+```
+
+## Why use IIFE?
+
+### Create private scope
+
+Before `let` and `const`,
+JavaScript only had function scope. So, if you wanted to create a new scope to avoid polluting the global namespace, you could use an IIFE.
+
+**Without IIFE:**
+
+```js
+var message = "Hello";
+```
+
+**With IIFE:**
+
+```js
+(function () {
+  var message = "Hello";
+})();
+```
+
+Now `message` is private to that function.
+
+**Outside access**
+
+```js
+console.log(message); // ReferenceError: message is not defined
+```
+
+🔥 Very important historical interview point
+
+Before ES6:
+
+- no block scope with `var`
+- no modules
+- IIFE was widely used for encapsulation
+
+### Avoid variable collisions
+
+```js
+var name = "global";
+
+(function () {
+  var name = "local";
+  console.log(name); //local
+})();
+
+console.log(name); //global
+```
+
+### Module pattern foundation
+
+IIFE is the basis for the module pattern, which allows you to create modules with private and public members.
+
+```js
+const counter = (function () {
+  let count = 0;
+
+  return {
+    increment() {
+      count++;
+      return count;
+    },
+  };
+})();
+```
+
+- `count` becomes private.
+- Accessible only through returned methods.
+- This is directly related to `closures`.
+
+## 🎯 Tricky interview question
+
+### What will be the output of this code?
+
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, 1000);
+}
+```
+
+**Answer:**
+
+```
+3
+3
+3
+```
+
+#### Fix using IIFE
+
+```js
+for (var i = 0; i < 3; i++) {
+  (function (x) {
+    setTimeout(function () {
+      console.log(x);
+    }, 1000);
+  })(i);
+}
+```
+
+```js
+0;
+1;
+2;
+```
+
+- Each IIFE creates a new `function` scope
+- So each iteration gets its own copy of `x`.
+- This is `closure + IIFE` together.
+
+#### Modern fix using `let`
+
+```js
+for (let i = 0; i < 3; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, 1000);
+}
+```
+
+- This already creates block scope.
+
+> IIFEs are less common in modern JavaScript because block scope (let, const) and ES modules solve most historical use cases.
