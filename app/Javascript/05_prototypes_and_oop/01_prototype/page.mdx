@@ -1,2 +1,366 @@
 # Prototype
 
+## The Core idea
+
+> In JavaScript almost everything is an object, and every object can inherit properties from another object.
+
+That inheritance happens through something called a `prototype`.
+
+So a `prototype` is simply
+
+> another object that acts as a fallback source of properties and methods
+
+If JavaScript cannot find a property directly on an object, it looks at its `prototype`.
+This lookup continues upward in a `chain`. That is called the `prototype chain`.
+
+### Basic Example
+
+```js
+const arr = [1, 2, 3];
+
+console.log(arr.push);
+```
+
+> You never defined `push`. It comes from the array's `prototype`.
+
+#### Internally
+
+```js
+arr ---> Array.prototype ---> Object.prototype ---> null
+```
+
+So when JS sees `arr.push`, it does the below:
+
+it searches in this order:
+
+1. inside `arr`
+2. inside `Array.prototype`
+3. inside `Object.prototype`
+4. stop at `null`
+   This is the `prototype chain`.
+
+## What a Prototype Actually Is?
+
+> Every object has an internal hidden link to another object. That hidden link is its `prototype`.
+
+Conceptually
+
+```js
+obj.[[Prototype]]
+```
+
+The official internal name is `[[Prototype]]`
+
+> This is not directly accessible in code. **But JavaScript exposes ways to inspect it.**
+
+### Example
+
+```js
+const user = {
+  name: "Sid",
+};
+
+console.log(Object.getPrototypeOf(user)); //{}
+```
+
+which gives methods like:
+`toString(), hasOwnProperty(), valueOf()`
+
+## How Method Sharing Works? 🧠 Important
+
+**Suppose you create 100 users.**
+
+### Bad approach
+
+```js
+function User(name) {
+  this.name = name;
+  this.sayHi = function () {
+    console.log("Hi");
+  };
+}
+
+const u1 = new User("A");
+const u2 = new User("B");
+//
+//...
+//
+```
+
+Memory looks like:
+
+```txt
+u1 -> own sayHi function
+u2 -> own sayHi function
+u3 -> own sayHi function
+...
+```
+
+_**This is memory waste.**_
+
+### Better Approach — Shared via Prototype
+
+```js
+function User(name) {
+  this.name = name;
+}
+
+User.prototype.sayHi = function () {
+  console.log("Hi");
+};
+
+const u1 = new User("A");
+const u2 = new User("B");
+```
+
+**Both objects share the same method.**
+
+Memory looks like:
+
+```txt
+u1
+  ↓
+User.prototype -> sayHi()
+
+u2
+  ↓
+User.prototype -> same sayHi()
+```
+
+> Only one function exists in memory.
+
+#### Memory Optimization Benefit
+
+This is one of the most common “why prototypes?” questions.
+
+Interview answer:
+
+> Prototypes allow method sharing across instances, avoiding duplicate function creation and reducing memory usage.
+
+Without prototype:
+
+```txt
+1000 users = 1000 copies of same function
+```
+
+With prototype:
+
+```txt
+1000 users = 1 shared function
+```
+
+## `__proto__` vs `prototype`
+
+> This is one of the biggest interview traps. Many candidates mix these up.
+
+### `prototype`
+
+> Used only on `functions` / `constructor` functions
+
+```js
+function User() {}
+
+console.log(User.prototype); //{}
+```
+
+This object will be used as the prototype of objects created using `new`.
+
+So:
+
+```js
+const u = new User();
+```
+
+Internally:
+
+```js
+u.__proto__ === User.prototype;
+```
+
+### `__proto__`
+
+> This belongs to `instances` / `objects`
+
+```js
+const u = new User();
+
+console.log(u.__proto__);
+```
+
+This points to the object's prototype.
+
+#### Golden Interview Line
+
+> `prototype` belongs to constructor functions
+> `__proto__` belongs to object instances
+
+#### Most Asked Equality Question
+
+```js
+function User() {}
+
+const u = new User();
+
+console.log(u.__proto__ === User.prototype); //true
+```
+
+### Common Trap
+
+> ❌ “Every object has prototype property”
+> This is false. Only functions have `prototype` property.
+
+```js
+const obj = {};
+console.log(obj.prototype); //undefined
+```
+
+## Output-Based Questions
+
+### Question 1
+
+```js
+function Person() {}
+
+Person.prototype.age = 30;
+
+const p1 = new Person();
+
+console.log(p1.age); //30
+```
+
+- age not found on p1
+- search prototype
+- found on Person.prototype
+
+### Question 2
+
+```js
+function Person() {}
+
+Person.prototype.age = 30;
+
+const p1 = new Person();
+p1.age = 40;
+
+console.log(p1.age); //40
+```
+
+- age found on p1 (own property)
+- does not search prototype
+- returns own property value
+
+> own property shadows prototype property
+
+### Question 3
+
+```js
+const arr = [1, 2];
+
+console.log(arr.hasOwnProperty("push")); //false
+```
+
+- Because push lives on Array.prototype.
+
+### Question 4
+
+```js
+console.log([].__proto__ === Array.prototype); //true
+```
+
+## Prototype Chain Lookup Rules
+
+**Rule:**
+
+1. check own object
+2. check prototype
+3. check parent prototype
+4. continue till null
+
+Example:
+
+```js
+const obj = {};
+
+console.log(obj.toString());
+```
+
+```txt
+
+obj
+ ↓
+Object.prototype
+ ↓
+found toString()
+```
+
+## Relation to Classes
+
+> Many developers use classes but do not know that classes are syntactic sugar.
+> JS classes are built on top of prototypes.
+
+```js
+class User {
+  sayHi() {
+    console.log("Hi");
+  }
+}
+```
+
+Equivalent to:
+
+```js
+function User() {}
+
+User.prototype.sayHi = function () {
+  console.log("Hi");
+};
+```
+
+> JavaScript classes are syntactic sugar over prototype-based inheritance.
+
+## Relation to Inheritance
+
+> Inheritance in JavaScript is prototype chaining.
+
+```js
+const animal = {
+  eat() {
+    console.log("eat");
+  },
+};
+
+const dog = {
+  bark() {
+    console.log("bark");
+  },
+};
+
+Object.setPrototypeOf(dog, animal);
+
+dog.eat(); //eat
+```
+
+Because:
+
+```txt
+dog -> animal -> Object.prototype
+```
+
+> `Super Important Interview Statement`: JavaScript is prototype-based, not class-based.
+> Even class syntax still compiles into prototype logic.
+
+## Real Interview Trap Question
+
+```js
+function A() {}
+
+const a = new A();
+
+console.log(a.constructor === A); //true
+```
+
+Because `constructor` comes from prototype.
+
+```txt
+a -> A.prototype -> constructor
+```
