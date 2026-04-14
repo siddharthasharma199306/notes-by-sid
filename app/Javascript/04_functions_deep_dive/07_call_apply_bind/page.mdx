@@ -1,2 +1,183 @@
 # Call Apply Bind
 
+> If `this` is decided by how a function is called, then `call`, `apply`, and `bind` are the tools that let you control that call-site explicitly.
+
+> `call`, `apply`, and `bind` are used to manually set the value of this.
+
+> `call`, `apply`, and `bind` are function methods used to explicitly control the this value during function execution.
+
+## 🧠 Base function
+
+Let's start with a simple function.
+
+```js
+function greet(city) {
+  console.log(`Hello ${this.name} from ${city}`);
+}
+
+const user = {
+  name: "Sid",
+};
+```
+
+`greet("Delhi");` // Hello undefined from Delhi
+
+this is `wrong` / `undefined` in strict mode. So we need to explictly set the value of `this` to `user` object. This is where `call`, `apply`, and `bind` come into play.
+
+## 1. call
+
+`call()` executes the function immediately and sets `this`.
+
+**Syntax:**
+
+```js
+fn.call(thisArg, arg1, arg2, ...)
+```
+
+**Example:**
+
+```js
+greet.call(user, "Delhi"); //Hello Sid from Delhi
+```
+
+### 🧠 Breakdown
+
+```js
+greet.call(user, "Delhi");
+```
+
+- run greet immediately
+- set this = user
+- pass "Delhi" as normal argument
+- Equal to saying user.greet("Delhi") if greet was a method of user object.
+
+### 🎯 Common use case
+
+```js
+const person1 = {
+  name: "Sid",
+};
+
+const person2 = {
+  name: "Amit",
+};
+
+function sayHi() {
+  console.log(this.name);
+}
+
+sayHi.call(person1); // Sid
+sayHi.call(person2); // Amit
+```
+
+## 2. apply
+
+> `apply()` is similar to `call()`, but it takes arguments as an array.
+
+**Syntax:**
+
+```js
+fn.apply(thisArg, [args]);
+```
+
+**Example:**
+
+```js
+function greet(city, country) {
+  console.log(`${this.name} - ${city}, ${country}`); //Sid - Delhi, India
+}
+
+const user = { name: "Sid" };
+
+greet.apply(user, ["Delhi", "India"]);
+```
+
+### 🎯 Key difference with `call`
+
+`call` takes arguments as a comma-separated list, while `apply` takes arguments as an array.
+
+`fn.call(obj, a, b)` vs `fn.apply(obj, [a, b])`
+
+## 3. bind() (VERY IMPORTANT)
+
+> Unlike `call` and `apply`, `bind` does not execute immediately. It returns a new function with fixed `this`.
+
+**Syntax:**
+
+```js
+const newFn = fn.bind(thisArg, ...args);
+```
+
+```js
+function greet() {
+  console.log(this.name); //Sid
+}
+
+const user = {
+  name: "Sid",
+};
+
+const boundFn = greet.bind(user);
+
+boundFn();
+```
+
+> `bind` returns a new function, this is the key distiction from call and apply which execute immediately.
+
+### 🚨 Classic interview question
+
+```js
+const user = {
+  name: "Sid",
+  greet() {
+    console.log(this.name); //undefined
+  },
+};
+
+setTimeout(user.greet, 1000);
+```
+
+> Because method context is lost.
+
+#### ✅ Fix with bind
+
+```js
+setTimeout(user.greet.bind(user), 1000);
+```
+
+### 🎯 Partial application with bind
+
+```js
+function multiply(a, b) {
+  return a * b;
+}
+
+const double = multiply.bind(null, 2);
+
+console.log(double(5)); //10
+```
+
+> `2` gets pre-filled as first argument. This is called partial application. `null` is passed as `thisArg` because `multiply` does not use `this`.
+
+### 🚨 Important trap question
+
+_**Does bind() change original function?**_
+_No, it returns a new function. The original function remains unchanged._
+
+```js
+function greet() {
+  console.log(this.name);
+}
+const user = { name: "Sid" };
+const boundGreet = greet.bind(user);
+boundGreet(); //Sid
+greet(); //undefined
+```
+
+## 💼 Best interview comparison table
+
+| Method  | Executes Immediately | Returns Function | Args Style               |
+| ------- | -------------------- | ---------------- | ------------------------ |
+| `call`  | Yes                  | No               | individual               |
+| `apply` | Yes                  | No               | array                    |
+| `bind`  | No                   | Yes              | individual (during bind) |

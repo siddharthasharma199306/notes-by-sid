@@ -1,2 +1,179 @@
 # This Keyword
 
+> `this` is determined by how a function is called, not where it is defined.
+
+> `this` is a special keyword that refers to the execution context / calling object of a function.
+
+## 🧠 Golden rule
+
+_**Call-site decides `this`**_ and not _declaration_ site.
+
+## 1. Global context
+
+In global context, `this` refers to the global `window` object.
+
+```js
+console.log(this); //window
+```
+
+`this === window`
+
+```js
+var name = "Sid";
+
+console.log(this.name); //Sid
+```
+
+## 2. Regular function call
+
+⚠️ Very important to understand the behavior of `this` in strict vs non-strict mode.
+
+### Non-strict mode
+
+```js
+function show() {
+  console.log(this); //window
+}
+
+show();
+```
+
+### Strict mode
+
+```js
+"use strict";
+
+function show() {
+  console.log(this); //undefined
+}
+
+show();
+```
+
+> In a normal function call, `this` refers to global object in `non-strict` mode and `undefined` in `strict` mode.
+
+## 3. Method call (VERY IMPORTANT)
+
+When function is called through an object:
+
+```js
+const user = {
+  name: "Sid",
+  greet() {
+    console.log(this.name); //Sid
+  },
+};
+
+user.greet();
+```
+
+Here `this` refers to `user`
+
+> In method calls, `this` refers to the object before the `dot`.
+
+### 🚨 Classic interview trap
+
+```js
+const user = {
+  name: "Sid",
+  greet() {
+    console.log(this.name); //undefined
+  },
+};
+
+const fn = user.greet;
+fn();
+```
+
+Here `this` is not `user` because we are not calling the function through the object.
+We are just copying the reference of the function and calling it. So `this` will refer to global object in non-strict mode and `undefined` in strict mode.
+
+## 4. Arrow functions (VERY IMPORTANT)
+
+_**Arrow functions behave differently.**_
+
+> They do not have their own this. They inherit `this` from the surrounding (lexical) context.
+
+```js
+const user = {
+  name: "Sid",
+  greet: () => {
+    console.log(this.name); //undefined
+  },
+};
+user.greet();
+```
+
+Here `this` does not refer to `user` because arrow functions do not have their own `this`. They inherit `this` from the surrounding context, which is the global object in this case.
+
+> Because arrow functions capture `this` from outer scope.
+
+> Arrow functions do not bind their own `this`; they inherit it from the lexical parent scope.
+
+### 🔥 Common real-world usage
+
+```js
+const user = {
+  name: "Sid",
+  greet() {
+    setTimeout(() => {
+      console.log(this.name); //Sid
+    }, 1000);
+  },
+};
+```
+
+> Because arrow function inherits `this` from `greet`
+
+## 5. Constructor function
+
+> When used with `new` keyword, `this` refers to the newly created object.
+
+```js
+function User(name) {
+  this.name = name;
+}
+
+const u = new User("Sid");
+
+console.log(u.name); //Sid
+```
+
+## 6. DOM event handler
+
+> Here `this` refers to clicked DOM element.
+
+```js
+//Here `this` refers to clicked DOM element.
+button.addEventListener("click", function () {
+  console.log(this);
+});
+```
+
+### 🎯 But arrow changes this
+
+> Now `this` comes from outer lexical scope. This often causes bugs.
+
+```js
+button.addEventListener("click", () => {
+  console.log(this);
+});
+```
+
+## 🚨 Most important interview question
+
+### What will be the output of this code
+
+```js
+const obj = {
+  name: "Sid",
+  getName() {
+    return this.name;
+  },
+};
+
+const fn = obj.getName;
+console.log(fn());
+```
+
+Answer: `undefined`
