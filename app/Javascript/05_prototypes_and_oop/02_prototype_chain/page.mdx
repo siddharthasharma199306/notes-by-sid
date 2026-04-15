@@ -1,3 +1,60 @@
 # Prototype Chain
 
 > If `prototype` is the fallback object, then the `prototype` chain is the full lookup path JavaScript follows when resolving properties and methods.
+
+> a linked chain of objects through which JavaScript searches for properties
+
+**Rule:**
+
+1. check own object
+2. check prototype
+3. check parent prototype
+4. continue till null
+
+## Why null at the End?
+
+because null means:
+
+> no further prototype exists
+
+```js
+console.log(Object.getPrototypeOf(Object.prototype)); //null
+```
+
+## Simple Example
+
+```js
+const arr = [1, 2, 3];
+
+console.log(arr.toString());
+```
+
+```txt
+arr
+ ↓
+Array.prototype
+ ↓
+Object.prototype
+ ↓
+null
+```
+
+## `instanceof` Uses Prototype Chain
+
+```js
+const arr = [];
+
+console.log(arr instanceof Array); //true
+```
+
+It checks whether: `Array.prototype` is in the prototype chain of `arr`.
+
+## Common Interview Trap
+
+> Question: Does copying an object also copy its prototype?
+> Answer: Spread copies own enumerable properties, not the prototype chain
+
+```js
+const obj = {};
+const copy = { ...obj };
+```

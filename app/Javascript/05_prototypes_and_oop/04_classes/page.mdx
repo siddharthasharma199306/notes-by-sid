@@ -1,2 +1,110 @@
 # Classes
 
+> [!IMPORTANT]
+>
+> Classes are a syntactic sugar over constructor functions in JavaScript.
+> A class is a cleaner way to create object blueprints.
+
+```js
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  sayHi() {
+    console.log(`Hi ${this.name}`); //Hi Sid
+  }
+}
+
+const u1 = new User("Sid", 30);
+
+u1.sayHi();
+```
+
+## What Does constructor() Mean?
+
+`constructor()` is a special method in a class that is called when a new instance of the class is created.
+
+### Equivalent Constructor Function
+
+```js
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+
+  greet() {
+    console.log("hello");
+  }
+}
+
+//is internally equivalent to
+
+function User(name) {
+  this.name = name;
+}
+
+User.prototype.greet = function () {
+  console.log("hello");
+};
+```
+
+## Where Do Methods Live?
+
+Consider:
+
+```js
+class User {
+  greet() {
+    console.log("hi");
+  }
+}
+```
+
+> Is greet() copied into every instance?
+
+> No, it is stored on User.prototype
+
+Verification
+
+```js
+const u = new User();
+
+console.log(u.hasOwnProperty("greet")); //false
+console.log(User.prototype.hasOwnProperty("greet")); //true
+console.log(u.__proto__.hasOwnProperty("greet")); //true
+```
+
+## Inteview Question
+
+### Q1
+
+```js
+class User {}
+
+console.log(typeof User); //function
+```
+
+> Classes are special functions
+
+## Important Difference from Constructor Functions
+
+> Classes must be called with `new`.
+
+```js
+class User {}
+
+const u = User();
+// TypeError: Class constructor User cannot be invoked without 'new'
+```
+
+## Class Methods Are Non-Enumerable
+
+```js
+class User {
+  greet() {}
+}
+
+console.log(Object.keys(User.prototype)); //[]
+```

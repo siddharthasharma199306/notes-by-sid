@@ -1,2 +1,166 @@
 # Constructor Functions
 
+> [!IMPORTANT]
+>
+> A regular function used with the `new` keyword to create object instances
+
+```js
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const u1 = new User("Sid", 30);
+const u2 = new User("Alex", 28);
+
+console.log(u1); //{ name: "Sid", age: 30 }
+```
+
+## Why Do We Need It?
+
+Without constructor functions, we would have to create objects manually like this. This becomes repititive.
+
+```js
+const u1 = { name: "Sid", age: 30 };
+const u2 = { name: "Alex", age: 28 };
+const u3 = { name: "John", age: 25 };
+```
+
+## Why Capitalized Names?
+
+> [!NOTE]
+>
+> Constructor functions are typically capitalized to distinguish them from regular functions.
+> This is a convention in JavaScript to indicate that the function is intended to be used as a constructor with the `new` keyword.
+> This is not a requirement, but it helps developers quickly identify constructor functions in the codebase.
+
+## What Happens When new Is Used? 🧠
+
+When we do `const u = new User("Sid", 30);`, the following happens:
+
+### Step 1 — Create Empty Object
+
+```js
+const obj = {};
+```
+
+### Step 2 — Link Prototype
+
+```js
+obj.__proto__ = User.prototype;
+```
+
+### Step 3 — Bind this
+
+```js
+User.call(obj, "Sid", 30);
+```
+
+Inside constructor:
+
+```js
+this.name = "Sid";
+this.age = 30;
+```
+
+So object becomes:
+
+```js
+{
+  name: "Sid",
+  age: 30
+}
+```
+
+### Step 4 — Return Object
+
+```js
+return obj;
+```
+
+This is the final returned instance.
+
+### Internal Simulation
+
+```js
+function User(name) {
+  this.name = name;
+}
+```
+
+Is internally transformed to:
+
+```js
+function fakeNew(fn, ...args) {
+  const obj = {};
+  obj.__proto__ = fn.prototype;
+  fn.apply(obj, args);
+  return obj;
+}
+```
+
+## What If You Forget new?
+
+```js
+function User(name) {
+  this.name = name;
+}
+
+const u = User("Sid");
+```
+
+**In non-strict mode:**
+
+```js
+window.name = "Sid";
+```
+
+**In strict mode:**
+
+```js
+TypeError: Cannot set property 'name' of undefined
+```
+
+### Best Practice Safety Check
+
+```js {3}
+//This prevents accidental misuse.
+function User(name) {
+  if (!(this instanceof User)) {
+    return new User(name);
+  }
+
+  this.name = name;
+}
+```
+
+## Common Interview Traps
+
+### Trap 1
+
+> Is constructor function a special type of function?
+> No, it is a normal function used with `new`
+
+### Trap 2
+
+> Does constructor automatically return object?
+> Yes when used with `new`, unless explicitly returning another object
+
+### Trap 3
+
+```js
+function A() {
+  return { x: 1 };
+}
+
+const a = new A();
+console.log(a);
+```
+
+```js
+{
+  x: 1;
+}
+```
+
+> Explicit object return overrides default return.

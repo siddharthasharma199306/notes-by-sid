@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
 };
 
 const withNextra = nextra({
-  // ... Add Nextra-specific options here
+  defaultShowCopyCode: true,
 });
 
 export default withNextra(nextConfig);
